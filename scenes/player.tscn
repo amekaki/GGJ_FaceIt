@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bplayer01"]
+[gd_scene load_steps=16 format=3 uid="uid://bplayer01"]
 
 [ext_resource type="Script" uid="uid://btnagtrqghc1" path="res://scripts/entities/player.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dg8he3t05d6gw" path="res://assets/test/player/开心跳技能.png" id="2_dqkch"]
@@ -94,22 +94,22 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D"]
-size = Vector2(32, 150)
+size = Vector2(142, 150)
 
-[node name="Player" type="Node2D" unique_id=767241862]
+[node name="Player" type="Node2D"]
 script = ExtResource("1_script")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=636617355]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(3.1220183, -0.9467783)
 scale = Vector2(7.702665, 7.137788)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 animation = &"IDEL"
 
-[node name="DeflectZone" type="Area2D" parent="." unique_id=2021259656 groups=["player_deflect_zone"]]
+[node name="DeflectZone" type="Area2D" parent="." groups=["player_deflect_zone"]]
 position = Vector2(28, 1)
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeflectZone" unique_id=831967009]
-position = Vector2(-28, -1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeflectZone"]
+position = Vector2(-25, -1)
 shape = SubResource("RectangleShape2D")

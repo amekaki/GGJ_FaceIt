@@ -86,7 +86,7 @@ func _on_beat() -> void:
 		tap_sound.play()
 	var beat_in_wave := beat_index - wave_start_beat
 	var travel_beats: float = 4.0  ## 文字飞行节拍数，到达击打区时踩点
-	var speed: float = _get_attack_speed_for_beat_arrival(travel_beats)
+	var speed: float = _get_attack_speed_for_beat_arrival(travel_beats)	
 	if current_wave_index < waves.size():
 		var wave: Dictionary = waves[current_wave_index]
 		var attack_words: Array = wave.get("attack_words", [])
@@ -106,24 +106,8 @@ func _on_beat() -> void:
 			
 		var interval: int = int(wave.get("interval_time", 0))
 		if beat_index == wave_start_beat + interval-1:
-			wave_start_beat = beat_index+1
+			wave_start_beat = beat_index + 1
 			current_wave_index += 1
-		# 	## 下一波若 beat_config 含 0，需在过渡节拍立即生成（否则会跳过 beat 0）
-		# 	if current_wave_index < waves.size():
-		# 		var next_wave: Dictionary = waves[current_wave_index]
-		# 		var next_words: Array = next_wave.get("attack_words", [])
-		# 		var next_counter: Array = next_wave.get("counterattack_words", [])
-		# 		var next_damage: Array = next_wave.get("damage_value", [])
-		# 		var next_beat_cfg: Array = next_wave.get("beat_config", [])
-		# 		for j in range(next_beat_cfg.size()):
-		# 			if j >= next_words.size():
-		# 				continue
-		# 			if int(next_beat_cfg[j]) == 0:
-		# 				var aw: String = next_words[j] if next_words[j] is String else str(next_words[j])
-		# 				var cw: String = next_counter[j] if j < next_counter.size() and next_counter[j] is String else aw
-		# 				var dmg: int = int(next_damage[j]) if j < next_damage.size() else 1
-		# 				_spawn_flying_text(aw, cw, dmg, speed, current_wave_index)
-		# 				enemy.play_attack()
 	beat_index += 1
 	beat_timer.start(60.0 / beat_bpm)
 
