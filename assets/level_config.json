@@ -1,6 +1,8 @@
 {
 	"beat_bpm": 90.0,
-	"waves": [
+	"intermediate_threshold": 0.5,
+	"advanced_threshold": 0.8,
+	"normal_waves": [
 		{
 			"get_ready_time": 2.0,
 			"attack_wait_time": 2.0,
@@ -15,9 +17,9 @@
 				"笨"
 			],
 			"damage_value": [
-				1.0,
-				1.0,
-				1.0
+				100,
+				10,
+				10
 			],
 			"beat_config": [
 				0.0,
@@ -27,7 +29,7 @@
 			"travel_beats": 4.0,
 			"interval_time": 4.0,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value": 16.0
+			"sentence_damage_value":55
 		},
 		{
 			"get_ready_time": 2.0,
@@ -51,7 +53,115 @@
 			"travel_beats": 4.0,
 			"interval_time": 12.0,
 			"attack_sentence": "很强！",
-			"sentence_damage_value": 16.0
+			"sentence_damage_value": 55
+		}
+	],
+	"intermediate_waves": [
+		{
+			"get_ready_time": 2.0,
+			"attack_wait_time": 2.0,
+			"attack_words": [
+				"中级",
+				"笨蛋",
+				"啊"
+			],
+			"counterattack_words": [
+				"你",
+				"才",
+				"笨"
+			],
+			"damage_value": [
+				100,
+				10,
+				10
+			],
+			"beat_config": [
+				0.0,
+				1.0,
+				3.0
+			],
+			"travel_beats": 4.0,
+			"interval_time": 4.0,
+			"attack_sentence": "你才是！！！",
+			"sentence_damage_value":100
+		},
+		{
+			"get_ready_time": 2.0,
+			"attack_wait_time": 2.0,
+			"attack_words": [
+				"菜",
+				"鸡"
+			],
+			"counterattack_words": [
+				"强",
+				"啊"
+			],
+			"damage_value": [
+				1.0,
+				1.0
+			],
+			"beat_config": [
+				0.0,
+				2.0
+			],
+			"travel_beats": 4.0,
+			"interval_time": 12.0,
+			"attack_sentence": "很强！",
+			"sentence_damage_value": 30
+		}
+	],
+	"advanced_waves": [
+		{
+			"get_ready_time": 2.0,
+			"attack_wait_time": 2.0,
+			"attack_words": [
+				"高级",
+				"笨蛋",
+				"啊"
+			],
+			"counterattack_words": [
+				"你",
+				"才",
+				"笨"
+			],
+			"damage_value": [
+				100,
+				10,
+				10
+			],
+			"beat_config": [
+				0.0,
+				1.0,
+				3.0
+			],
+			"travel_beats": 4.0,
+			"interval_time": 4.0,
+			"attack_sentence": "你才是！！！",
+			"sentence_damage_value":100
+		},
+		{
+			"get_ready_time": 2.0,
+			"attack_wait_time": 2.0,
+			"attack_words": [
+				"菜",
+				"鸡"
+			],
+			"counterattack_words": [
+				"强",
+				"啊"
+			],
+			"damage_value": [
+				1.0,
+				1.0
+			],
+			"beat_config": [
+				0.0,
+				2.0
+			],
+			"travel_beats": 4.0,
+			"interval_time": 12.0,
+			"attack_sentence": "很强！",
+			"sentence_damage_value": 50
 		}
 	]
 }

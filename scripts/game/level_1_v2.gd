@@ -12,7 +12,12 @@ extends Node
 @onready var _save: Node = get_node("/root/SaveManager")
 
 var level_data: Dictionary = {}
-var waves: Array = []
+var normal_waves: Array = []
+var intermediate_waves: Array = []
+var advanced_waves: Array = []
+var intermediate_threshold: float = 0.5
+var advanced_threshold: float = 0.8
+var waves: Array = []  # 当前使用的wavelist
 var beat_bpm: float = 120.0
 var beat_index: int = 0
 var current_wave_index: int = 0
@@ -65,17 +70,42 @@ func _load_level() -> void:
 		return
 	level_data = parsed
 	beat_bpm = float(level_data.get("beat_bpm", 120))
-	waves = level_data.get("waves", [])
+	intermediate_threshold = float(level_data.get("intermediate_threshold", 0.5))
+	advanced_threshold = float(level_data.get("advanced_threshold", 0.8))
+	normal_waves = level_data.get("normal_waves", [])
+	intermediate_waves = level_data.get("intermediate_waves", [])
+	advanced_waves = level_data.get("advanced_waves", [])
+	_update_waves_by_hp()
 	if waves.is_empty():
 		push_warning("Level has no waves")
 
 func _apply_layout() -> void:
 	pass
 
+func _update_waves_by_hp() -> void:
+	if not enemy:
+		waves = normal_waves
+		return
+	var hp_ratio: float = float(enemy.current_hp) / float(enemy.max_hp) if enemy.max_hp > 0 else 1.0
+	print("hp_ratio: ", hp_ratio)
+	if hp_ratio <= advanced_threshold:
+		print("advanced")
+		waves = advanced_waves
+	elif hp_ratio <= intermediate_threshold:
+		print("intermediate")
+		waves = intermediate_waves
+	else:
+		waves = normal_waves
+	# 如果当前wave_index超出范围，重置为0（循环读取）
+	if current_wave_index >= waves.size() and waves.size() > 0:
+		current_wave_index = 0
+
 func _start_wave() -> void:
-	# if current_wave_index >= waves.size():
-	# 	_finish_game(true)
-	# 	return
+	_update_waves_by_hp()
+	if waves.is_empty():
+		return
+	if current_wave_index >= waves.size():
+		current_wave_index = 0
 	var _wave: Dictionary = waves[current_wave_index]
 	wave_start_beat = beat_index
 	_phase = "CHARGING"
@@ -107,6 +137,8 @@ func _on_beat() -> void:
 	if game_over:
 		beat_timer.start(60.0 / beat_bpm)
 		return
+	# 根据当前血量更新wavelist（可能在战斗中血量变化导致阶段切换）
+	_update_waves_by_hp()
 	if tap_sound and tap_sound.stream:
 		tap_sound.play()
 	if _pending_counter_wave.size() > 0:
@@ -117,7 +149,7 @@ func _on_beat() -> void:
 		beat_index += 1
 		beat_timer.start(60.0 / beat_bpm)
 		return
-	if current_wave_index >= waves.size():
+	if waves.is_empty() or current_wave_index >= waves.size():
 		beat_index += 1
 		beat_timer.start(60.0 / beat_bpm)
 		return
@@ -216,18 +248,19 @@ func _check_resolve(wave: Dictionary) -> void:
 		_phase = "CHARGING"
 		_advance_wave(false)
 
-func _advance_wave(success: bool) -> void:
+func _advance_wave(_success: bool) -> void:
+	# 根据当前血量更新wavelist
+	_update_waves_by_hp()
 	var wave: Dictionary = waves[current_wave_index] if current_wave_index < waves.size() else {}
 	var interval: int = int(wave.get("interval_time", 4))
 	current_wave_index += 1
 	wave_start_beat = beat_index + interval
-	if current_wave_index >= waves.size():
-		# _finish_game(success)
-		pass
-	else:
-		_phase = "CHARGING"
-		_flying_count = 0
-		_hit_count = 0
+	# 如果超出范围，循环到第一个
+	if current_wave_index >= waves.size() and waves.size() > 0:
+		current_wave_index = 0
+	_phase = "CHARGING"
+	_flying_count = 0
+	_hit_count = 0
 
 func _spawn_flying_text(spawn_pos: Vector2, attack_word: String, _counter_word: String, damage: int, attack_speed: float, deflect_explode: bool) -> void:
 	var ft: Area2D = FLYING_TEXT_SCENE.instantiate()
@@ -274,6 +307,8 @@ func _on_flying_text_hit_enemy(_ft: Node) -> void:
 
 func _on_counter_sentence_hit_enemy(_ft: Node) -> void:
 	enemy.play_damage()
+	# 敌人受伤后，检查是否需要切换阶段
+	_update_waves_by_hp()
 
 func _process(delta: float) -> void:
 	if _shake_remaining > 0 and camera:
