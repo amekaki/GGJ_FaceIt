@@ -14,34 +14,54 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HPContainer" type="Control" parent="MarginContainer"]
 layout_mode = 2
+anchors_preset = 1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 60.0
 
-[node name="EnemyHPLabel" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
+[node name="EnemyHPLabel" type="VBoxContainer" parent="MarginContainer/HPContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.333333
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 50.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/EnemyHPLabel"]
+[node name="Label" type="Label" parent="MarginContainer/HPContainer/EnemyHPLabel"]
 layout_mode = 2
 text = "敌人血量"
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/EnemyHPLabel"]
-custom_minimum_size = Vector2(200, 24)
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HPContainer/EnemyHPLabel"]
 layout_mode = 2
 max_value = 100.0
 value = 100.0
 show_percentage = false
 
-[node name="PlayerHPLabel" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
+[node name="PlayerHPLabel" type="VBoxContainer" parent="MarginContainer/HPContainer"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 0.666667
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 50.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PlayerHPLabel"]
+[node name="Label" type="Label" parent="MarginContainer/HPContainer/PlayerHPLabel"]
 layout_mode = 2
 text = "玩家血量"
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/PlayerHPLabel"]
-custom_minimum_size = Vector2(200, 24)
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HPContainer/PlayerHPLabel"]
 layout_mode = 2
 max_value = 100.0
 value = 100.0

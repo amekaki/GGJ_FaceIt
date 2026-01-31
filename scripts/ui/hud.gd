@@ -1,12 +1,17 @@
 extends CanvasLayer
 ## HUD：敌人血条、玩家血条、退出游戏按钮（右下角）
 
-@onready var enemy_hp_bar: ProgressBar = $MarginContainer/VBoxContainer/EnemyHPLabel/ProgressBar
-@onready var player_hp_bar: ProgressBar = $MarginContainer/VBoxContainer/PlayerHPLabel/ProgressBar
+@onready var enemy_hp_bar: ProgressBar = $MarginContainer/HPContainer/EnemyHPLabel/ProgressBar
+@onready var player_hp_bar: ProgressBar = $MarginContainer/HPContainer/PlayerHPLabel/ProgressBar
+@onready var enemy_hp_label: VBoxContainer = $MarginContainer/HPContainer/EnemyHPLabel
+@onready var player_hp_label: VBoxContainer = $MarginContainer/HPContainer/PlayerHPLabel
 @onready var result_panel: PanelContainer = $ResultPanel
 @onready var result_label: Label = $ResultPanel/VBoxContainer/ResultLabel
 @onready var restart_btn: Button = $ResultPanel/VBoxContainer/RestartButton
 @onready var exit_btn: Button = $ExitButton
+
+const FLOATING_TEXT_SCENE := preload("res://scenes/ui/floating_text.tscn")
+const FLOATING_TEXT_DURATION: float = 0.5
 
 func _ready() -> void:
 	result_panel.hide()
@@ -32,6 +37,16 @@ func _on_enemy_hp_changed(current: int, maximum: int) -> void:
 func _on_player_hp_changed(current: int, maximum: int) -> void:
 	player_hp_bar.max_value = maximum
 	player_hp_bar.value = current
+
+func show_damage_text(damage: int, is_enemy: bool) -> void:
+	# 在进度条附近显示伤害值
+	var bar: ProgressBar = enemy_hp_bar if is_enemy else player_hp_bar
+	var bar_pos: Vector2 = bar.global_position
+	# 进度条中心位置上方
+	var text_pos: Vector2 = bar_pos + Vector2(bar.size.x / 2, -30)
+	var ft: Node2D = FLOATING_TEXT_SCENE.instantiate()
+	add_child(ft)
+	ft.setup("-" + str(damage), text_pos, Color(1, 0.3, 0.3), 36, FLOATING_TEXT_DURATION)
 
 func show_victory() -> void:
 	result_label.text = "胜利！"

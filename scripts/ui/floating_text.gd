@@ -1,0 +1,39 @@
+extends Node2D
+## 浮动文字效果：向上淡出
+
+@onready var label: Label = $Label
+
+var duration: float = 0.5
+var move_distance: float = 100.0
+var _elapsed: float = 0.0
+var _start_pos: Vector2
+
+func _ready() -> void:
+	_start_pos = global_position
+	if label:
+		label.modulate.a = 1.0
+
+func setup(text: String, pos: Vector2, color: Color = Color.WHITE, font_size: int = 48, dur: float = 0.5) -> void:
+	global_position = pos
+	_start_pos = pos
+	duration = dur
+	if label:
+		label.text = text
+		label.modulate = color
+		label.add_theme_font_size_override("font_size", font_size)
+		label.modulate.a = 1.0
+
+func _process(delta: float) -> void:
+	if not label:
+		return
+	_elapsed += delta
+	var progress: float = _elapsed / duration if duration > 0 else 1.0
+	
+	if progress >= 1.0:
+		queue_free()
+		return
+	
+	# 向上移动
+	global_position = _start_pos + Vector2(0, -move_distance * progress)
+	# 淡出
+	label.modulate.a = 1.0 - progress

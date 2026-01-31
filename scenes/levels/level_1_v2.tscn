@@ -4,11 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://bplayer01" path="res://scenes/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://benemy01" path="res://scenes/enemy.tscn" id="3_enemy"]
 [ext_resource type="PackedScene" uid="uid://bhud01" path="res://scenes/hud.tscn" id="4_hud"]
-[ext_resource type="AudioStream" uid="uid://dvse3vpqmm1uq" path="res://assets/music/tap.wav" id="5_tap"]
-[ext_resource type="Texture2D" uid="uid://bav8uf6lkevfy" path="res://assets/sprites/level_1/background.png" id="6_sk5k4"]
+[ext_resource type="AudioStream" uid="uid://ke80ye6whi76" path="res://assets/music/成功.mp3" id="5_tap"]
+[ext_resource type="AudioStream" uid="uid://cjhxubpgp3t3u" path="res://assets/music/level_1.mp3" id="6_music"]
+[ext_resource type="Texture2D" uid="uid://bav8uf6lkevfy" path="res://assets/sprites/level_1/background.png" id="7_sk5k4"]
+[ext_resource type="FontFile" uid="uid://fse5jeeww8v7" path="res://assets/fonts/YanXingXiangSu.ttf" id="8_font"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oc4kc"]
-atlas = ExtResource("6_sk5k4")
+atlas = ExtResource("7_sk5k4")
 region = Rect2(0, 0, 1200, 896)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s8va5"]
@@ -49,6 +51,32 @@ position = Vector2(220, 976)
 [node name="TapSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_tap")
 
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_music")
+autoplay = false
+
 [node name="BeatTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="WaveWarningLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -50.0
+offset_right = 300.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_font")
+theme_override_font_sizes/font_size = 80
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "下一波攻击即将到来"
+autowrap_mode = 2
+visible = false

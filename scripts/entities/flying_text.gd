@@ -15,6 +15,7 @@ var _damage: int = 1
 var _velocity: Vector2 = Vector2.ZERO
 var _in_deflect_zone: bool = false
 var spawn_wave_index: int = 0
+var word_index: int = -1  # 当前字在wave中的索引，用于获取音调配置
 var _entrance_t: float = 1.0
 var _deflect_t: float = 1.0
 var _anim_time: float = 0.0
@@ -72,9 +73,10 @@ func _format_counter_sentence(txt: String) -> String:
 	formatted += "[/center]"
 	return formatted
 
-func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: String = "", damage: int = 1, wave_index: int = 0, custom_speed: float = -1.0, deflect_explode_only: bool = false) -> void:
+func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: String = "", damage: int = 1, wave_index: int = 0, custom_speed: float = -1.0, deflect_explode_only: bool = false, word_idx: int = -1) -> void:
 	global_position = spawn_pos
 	spawn_wave_index = wave_index
+	word_index = word_idx
 	_word = attack_word if attack_word.is_empty() == false else _config.get_random_attack_word()
 	_counter_word = counter_word if counter_word.is_empty() == false else _config.get_counter_word_for(_word)
 	_damage = damage
