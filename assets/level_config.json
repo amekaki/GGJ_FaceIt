@@ -57,7 +57,7 @@
 			"sentence_damage_value": 10
 		}
 	],
-	"intermediate_waves": [
+	"advanced_waves": [
 		{
 			"get_ready_time": 2.0,
 			"attack_wait_time": 2.0,
@@ -111,7 +111,7 @@
 			"sentence_damage_value": 1
 		}
 	],
-	"advanced_waves": [
+	"intermediate_waves": [
 		{
 			"get_ready_time": 2.0,
 			"attack_wait_time": 2.0,
@@ -136,7 +136,7 @@
 				3.0
 			],
 			"travel_beats": 4.0,
-			"interval_time": 4.0,
+			"interval_time": 16.0,
 			"attack_sentence": "你才是！！！",
 			"sentence_damage_value":100
 		},
@@ -160,7 +160,7 @@
 				2.0
 			],
 			"travel_beats": 4.0,
-			"interval_time": 12.0,
+			"interval_time": 16.0,
 			"attack_sentence": "很强！",
 			"sentence_damage_value": 50
 		}

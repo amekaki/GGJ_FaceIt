@@ -151,6 +151,8 @@ func _update_waves_by_hp() -> void:
 	print("intermediate_threshold: ", intermediate_threshold)
 	
 	if hp_ratio <= advanced_threshold:
+		print("advanced")
+		print("advanced_waves: ", advanced_waves)
 		waves = advanced_waves
 		current_wave_index = 0
 	elif hp_ratio <= intermediate_threshold:
@@ -181,12 +183,20 @@ func _start_wave() -> void:
 		wave_warning_label.visible = true
 
 func _get_attack_speed(spawn_pos: Vector2, travel_beats: float) -> float:
-	var target_pos: Vector2 = player.global_position
+	# 使用玩家的击打区域（DeflectZone）的中心位置作为目标
+	var deflect_zone: Node2D = player.get_node_or_null("DeflectZone")
+	var target_pos: Vector2
+	if deflect_zone:
+		target_pos = deflect_zone.global_position
+	else:
+		target_pos = player.global_position
+	# 计算从生成位置到目标位置的距离（文字中心到玩家中心）
 	var distance: float = target_pos.x - spawn_pos.x
 	if distance <= 0 or travel_beats <= 0:
 		return _config.TEXT_SPEED_ATTACK
 	var beat_interval: float = 60.0 / beat_bpm
 	var travel_time: float = travel_beats * beat_interval
+	# 速度 = 距离 / 时间，确保文字中心在travel_beats个节拍后到达目标位置
 	return distance / travel_time
 
 func _get_counter_speed(travel_beats: float = 4.0) -> float:
@@ -247,6 +257,12 @@ func _on_beat() -> void:
 	var wait_time: int = int(wave.get("attack_wait_time", 2))
 	var travel_beats: float = float(wave.get("travel_beats", 4))
 	var fire_start: int = get_ready + wait_time
+	if beat_index >= wave_start_beat and beat_index < wave_start_beat + get_ready:
+		if wave_warning_label:
+			wave_warning_label.visible = true
+	else:
+		if wave_warning_label:
+			wave_warning_label.visible = false
 	var beat_in_wave: int = beat_index - wave_start_beat
 	var beat_after_wait: int = beat_in_wave - fire_start
 
@@ -261,9 +277,7 @@ func _on_beat() -> void:
 			# 隐藏"下一波攻击即将到来"提示
 			if wave_warning_label:
 				wave_warning_label.visible = false
-			var spawn_pos: Vector2 = enemy.global_position + Vector2(WORD_STACK_OFFSET_X, 0)
-			var speed: float = _get_attack_speed(spawn_pos, travel_beats)
-			_try_fire_word(beat_after_wait, wave, speed)
+			_try_fire_word(beat_after_wait, wave, travel_beats)
 	elif _phase == "WAITING":
 		# 当attack_wait_time开始时，隐藏"下一波攻击即将到来"提示
 		if beat_in_wave >= fire_start:
@@ -271,13 +285,9 @@ func _on_beat() -> void:
 			# 隐藏"下一波攻击即将到来"提示
 			if wave_warning_label:
 				wave_warning_label.visible = false
-			var spawn_pos: Vector2 = enemy.global_position + Vector2(WORD_STACK_OFFSET_X, 0)
-			var speed: float = _get_attack_speed(spawn_pos, travel_beats)
-			_try_fire_word(beat_after_wait, wave, speed)
+			_try_fire_word(beat_after_wait, wave, travel_beats)
 	elif _phase == "FIRING":
-		var spawn_pos: Vector2 = enemy.global_position + Vector2(WORD_STACK_OFFSET_X, 0)
-		var speed: float = _get_attack_speed(spawn_pos, travel_beats)
-		_try_fire_word(beat_after_wait, wave, speed)
+		_try_fire_word(beat_after_wait, wave, travel_beats)
 		if _should_check_resolve_next_beat and _flying_count == 0:
 			var beat_config: Array = wave.get("beat_config", [])
 			var max_fire_beat: int = -1
@@ -314,7 +324,7 @@ func _get_pitch_scale(pitch_name: String) -> float:
 	# 如果没有找到，返回默认值1.0
 	return 1.0
 
-func _try_fire_word(beat_from_ready: int, wave: Dictionary, speed: float) -> void:
+func _try_fire_word(beat_from_ready: int, wave: Dictionary, travel_beats: float) -> void:
 	var beat_config: Array = wave.get("beat_config", [])
 	var attack_words: Array = wave.get("attack_words", [])
 	var pitch_config: Array = wave.get("pitch_config", [])  # 音调配置数组
@@ -323,6 +333,8 @@ func _try_fire_word(beat_from_ready: int, wave: Dictionary, speed: float) -> voi
 		if beat_from_ready == target_beat and i < attack_words.size():
 			var word: String = str(attack_words[i])
 			var spawn_pos: Vector2 = enemy.global_position + Vector2(WORD_STACK_OFFSET_X, 0)
+			# 在文字实际生成时计算速度，使用实际的生成位置和目标位置
+			var speed: float = _get_attack_speed(spawn_pos, travel_beats)
 			# 怪兽吐字时播放TapSound，根据配置设置音调
 			if tap_sound and tap_sound.stream:
 				# 获取当前字的音调配置
