@@ -81,6 +81,10 @@ func _on_deflect_zone_area_exited(area: Area2D) -> void:
 	_texts_in_zone.erase(area)
 
 func _on_anim_finished() -> void:
+	if anim.animation == ANIM_HAPPY:
+		_skip_next_idle = false
+		play_idle()
+		return
 	if _skip_next_idle:
 		_skip_next_idle = false
 		return

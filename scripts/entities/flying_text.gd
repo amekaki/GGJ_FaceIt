@@ -22,6 +22,7 @@ var _impact_t: float = 0.0  ## 被玩家击中时的冲击效果时长
 var _vanish_t: float = 0.0  ## 击中玩家时的消失效果时长
 var _deflect_explode_only: bool = false  ## V2: 击中即爆炸，不反弹
 var _is_counter_sentence: bool = false  ## V2: 反击句，从玩家飞向怪物
+var _has_hit_enemy: bool = false  ## 防止重复触发攻击
 
 const TEXT_BOOM_SCENE := preload("res://scenes/levels/level_1/text_boom.tscn")
 
@@ -34,6 +35,12 @@ func _ready() -> void:
 	area_exited.connect(_on_area_exited)
 	sprite.texture = viewport.get_texture()
 
+func _update_viewport_size_for_counter() -> void:
+	if _is_counter_sentence:
+		var line_count: int = ceil(float(_word.length()) / 5.0)
+		var height: int = int(max(100, line_count * 80))
+		viewport.size = Vector2i(400, height)
+
 func _format_attack_text(txt: String) -> String:
 	## 怪物发射：大小变化(pulse，透明度变化弱) + 形状扭曲(tornado+shake)
 	return "[center][pulse freq=2.0 color=#ffffffff][tornado radius=12 freq=1.5][shake rate=18 level=3]%s[/shake][/tornado][/pulse][/center]" % txt
@@ -45,6 +52,25 @@ func _format_return_text(txt: String) -> String:
 func _format_impact_text(txt: String, color: String = "#ffffff") -> String:
 	## 冲击时刻：很粗的描边
 	return "[center][outline_size=14][outline_color=%s]%s[/outline_color][/outline_size][/center]" % [color, txt]
+
+func _format_counter_sentence(txt: String) -> String:
+	## 反击句：每5个字换行
+	var chars: Array[String] = []
+	for i in range(txt.length()):
+		chars.append(txt.substr(i, 1))
+	var lines: Array[String] = []
+	var current_line: String = ""
+	for i in range(chars.size()):
+		current_line += chars[i]
+		if (i + 1) % 5 == 0 or i == chars.size() - 1:
+			lines.append(current_line)
+			current_line = ""
+	var formatted: String = "[center]"
+	for line in lines:
+		formatted += line + "\n"
+	formatted = formatted.trim_suffix("\n")
+	formatted += "[/center]"
+	return formatted
 
 func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: String = "", damage: int = 1, wave_index: int = 0, custom_speed: float = -1.0, deflect_explode_only: bool = false) -> void:
 	global_position = spawn_pos
@@ -71,12 +97,14 @@ func init_counter_sentence(spawn_pos: Vector2, sentence: String, damage: int, sp
 	_damage = damage
 	_is_counter_sentence = true
 	_deflect_explode_only = false
+	_has_hit_enemy = false
 	_state = State.RETURNING
 	_velocity = Vector2(-speed, 0)
-	rich_label.text = _format_attack_text(_word)
+	rich_label.text = _format_counter_sentence(_word)
 	scale = Vector2(1.0, 1.0)
 	modulate = Color(1, 1, 1, 1)
 	_entrance_t = 1.0
+	_update_viewport_size_for_counter()
 
 func get_damage() -> int:
 	return _damage
@@ -100,6 +128,9 @@ func deflect() -> bool:
 	return true
 
 func _deflect_explode() -> void:
+	_state = State.VANISH_PLAYER
+	_in_deflect_zone = false
+	_velocity = Vector2.ZERO
 	var parent_node: Node = get_parent()
 	if parent_node:
 		var boom_inst: Node2D = TEXT_BOOM_SCENE.instantiate()
@@ -169,16 +200,46 @@ func _physics_process(delta: float) -> void:
 	if _state == State.ATTACKING and global_position.x > view_rect.end.x + 50:
 		missed.emit(self)
 		queue_free()
-	elif _state == State.RETURNING and global_position.x < view_rect.position.x - 50:
-		queue_free()
+	elif _state == State.RETURNING:
+		if _is_counter_sentence:
+			_check_counter_hit_enemy()
+		elif global_position.x < view_rect.position.x - 50:
+			queue_free()
+
+func _check_counter_hit_enemy() -> void:
+	if not _is_counter_sentence or _has_hit_enemy:
+		return
+	var enemy_hitbox: Area2D = get_tree().get_first_node_in_group("enemy_hitbox")
+	if not enemy_hitbox:
+		return
+	var hitbox_shape: CollisionShape2D = enemy_hitbox.get_node_or_null("CollisionShape2D")
+	if not hitbox_shape or not hitbox_shape.shape:
+		return
+	if hitbox_shape.shape is RectangleShape2D:
+		var rect_shape: RectangleShape2D = hitbox_shape.shape as RectangleShape2D
+		var hitbox_pos: Vector2 = enemy_hitbox.global_position + hitbox_shape.position
+		var hitbox_rect: Rect2 = Rect2(
+			hitbox_pos - rect_shape.size * 0.5,
+			rect_shape.size
+		)
+		var text_center: Vector2 = global_position
+		if hitbox_rect.has_point(text_center):
+			_has_hit_enemy = true
+			_start_hit_enemy_effect()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_deflect_zone") and _state == State.ATTACKING:
 		enter_deflect_zone()
-	elif _state == State.RETURNING and area.is_in_group("enemy_hitbox"):
+	elif _state == State.RETURNING and area.is_in_group("enemy_hitbox") and not _is_counter_sentence:
 		_start_hit_enemy_effect()
 
 func _start_hit_enemy_effect() -> void:
+	print("start hit enemy effect",_has_hit_enemy)
+	if _has_hit_enemy:
+		return
+	_has_hit_enemy = true
+	_velocity = Vector2.ZERO
+	visible = false
 	var parent_node: Node = get_parent()
 	if parent_node:
 		var boom_inst: Node2D = TEXT_BOOM_SCENE.instantiate()
@@ -189,7 +250,10 @@ func _start_hit_enemy_effect() -> void:
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("player_deflect_zone"):
-		if _state == State.ATTACKING:
+		if is_queued_for_deletion():
+			exit_deflect_zone()
+			return
+		if _state == State.ATTACKING and _in_deflect_zone:
 			## 文字飞出击打区未被弹反，击中玩家
 			print("flying text hit player")
 			_start_hit_player_effect()

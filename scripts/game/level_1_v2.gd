@@ -29,6 +29,7 @@ const WORD_STACK_OFFSET_X: float = 100.0
 var _flying_count: int = 0
 var _hit_count: int = 0
 var _pending_counter_wave: Dictionary = {}
+var _should_check_resolve_next_beat: bool = false
 
 const FLYING_TEXT_SCENE := preload("res://scenes/flying_text.tscn")
 const POPUP_LEVEL_SCENE := preload("res://scenes/ui/popup_level.tscn")
@@ -72,15 +73,16 @@ func _apply_layout() -> void:
 	pass
 
 func _start_wave() -> void:
-	if current_wave_index >= waves.size():
-		_finish_game(true)
-		return
+	# if current_wave_index >= waves.size():
+	# 	_finish_game(true)
+	# 	return
 	var _wave: Dictionary = waves[current_wave_index]
 	wave_start_beat = beat_index
 	_phase = "CHARGING"
 	_flying_count = 0
 	_hit_count = 0
 	_pending_counter_wave = {}
+	_should_check_resolve_next_beat = false
 
 func _get_attack_speed(spawn_pos: Vector2, travel_beats: float) -> float:
 	var target_pos: Vector2 = player.global_position
@@ -151,9 +153,16 @@ func _on_beat() -> void:
 		var spawn_pos: Vector2 = enemy.global_position + Vector2(WORD_STACK_OFFSET_X, 0)
 		var speed: float = _get_attack_speed(spawn_pos, travel_beats)
 		_try_fire_word(beat_after_wait, wave, speed)
-		# _check_resolve(wave)
-	elif _phase == "RESOLVING":
-		_check_resolve(wave)
+		if _should_check_resolve_next_beat and _flying_count == 0:
+			var beat_config: Array = wave.get("beat_config", [])
+			var max_fire_beat: int = -1
+			for b in beat_config:
+				var vb: int = int(b) if b is int else int(float(b))
+				if vb > max_fire_beat:
+					max_fire_beat = vb
+			if beat_after_wait > max_fire_beat:
+				_should_check_resolve_next_beat = false
+				_check_resolve(wave)
 
 	beat_index += 1
 	beat_timer.start(60.0 / beat_bpm)
@@ -192,20 +201,8 @@ func _try_fire_word(beat_from_ready: int, wave: Dictionary, speed: float) -> voi
 func _check_resolve(wave: Dictionary) -> void:
 	if _flying_count > 0:
 		return
-	var get_ready: int = int(wave.get("get_ready_time", 4))
-	var wait_time: int = int(wave.get("attack_wait_time", 2))
-	var fire_start: int = get_ready + wait_time
-	var beat_after_wait: int = beat_index - wave_start_beat - fire_start
 	var beat_config: Array = wave.get("beat_config", [])
-	var max_fire_beat: int = -1
-	for b in beat_config:
-		var vb: int = int(b) if b is int else int(float(b))
-		if vb > max_fire_beat:
-			max_fire_beat = vb
-	if beat_after_wait <= max_fire_beat:
-		return
 	var total: int = beat_config.size()
-	print("total: ", total, " _hit_count: ", _hit_count)
 	if _hit_count >= total:
 		_phase = "COUNTER"
 		_pending_counter_wave = wave
@@ -225,7 +222,8 @@ func _advance_wave(success: bool) -> void:
 	current_wave_index += 1
 	wave_start_beat = beat_index + interval
 	if current_wave_index >= waves.size():
-		_finish_game(success)
+		# _finish_game(success)
+		pass
 	else:
 		_phase = "CHARGING"
 		_flying_count = 0
@@ -261,11 +259,15 @@ func _on_flying_text_deflected(_ft: Node) -> void:
 	_shake_remaining = _shake_duration
 	_hit_count += 1
 	_flying_count -= 1
+	if _flying_count == 0:
+		_should_check_resolve_next_beat = true
 
 func _on_flying_text_missed(ft: Node) -> void:
 	if ft and ft.has_method("get_damage"):
 		pass
 	_flying_count -= 1
+	if _flying_count == 0:
+		_should_check_resolve_next_beat = true
 
 func _on_flying_text_hit_enemy(_ft: Node) -> void:
 	pass

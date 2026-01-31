@@ -141,7 +141,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D"]
-size = Vector2(773, 672)
+size = Vector2(629.5551, 672)
 
 [node name="Player" type="Node2D" unique_id=767241862]
 script = ExtResource("1_script")
@@ -150,7 +150,7 @@ script = ExtResource("1_script")
 position = Vector2(3.1220183, -0.9467783)
 scale = Vector2(7.702665, 7.137788)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"IDEL"
+animation = &"DAMAGE"
 
 [node name="DeflectZone" type="Area2D" parent="." unique_id=2021259656 groups=["player_deflect_zone"]]
 position = Vector2(28, 1)
@@ -158,5 +158,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeflectZone" unique_id=831967009]
-position = Vector2(22.5, -48)
+position = Vector2(-24, -3.9999998)
+rotation = -0.0017375035
+scale = Vector2(0.32500002, 0.32500002)
 shape = SubResource("RectangleShape2D")

@@ -1,19 +1,26 @@
 [gd_scene format=3 uid="uid://benemy01"]
 
-[ext_resource type="Script" path="res://scripts/entities/enemy.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://dfy12ppduyl07" path="res://assets/test/player/愤怒跳.png" id="2_xwavj"]
+[ext_resource type="Script" uid="uid://b0tq5ty75a45b" path="res://scripts/entities/enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dsivjpxblkjbd" path="res://assets/sprites/player/怪兽咆哮/怪兽咆哮.png" id="2_xwavj"]
 [ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="3_xwavj"]
 [ext_resource type="Texture2D" uid="uid://scdqwoiq1gar" path="res://assets/test/player/悲伤跳.png" id="4_md484"]
-[ext_resource type="Texture2D" uid="uid://btn1lwpjhy7ek" path="res://assets/test/player/愤怒静止.png" id="5_ipns3"]
 [ext_resource type="Texture2D" uid="uid://bn6pudf1hkvkv" path="res://assets/test/player/正常走.png" id="5_nenq2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8qclf"]
 atlas = ExtResource("2_xwavj")
-region = Rect2(0, 0, 18, 22)
+region = Rect2(0, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8i8w"]
 atlas = ExtResource("2_xwavj")
-region = Rect2(18, 0, 18, 22)
+region = Rect2(53, 0, 53, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtq4b"]
+atlas = ExtResource("2_xwavj")
+region = Rect2(0, 48, 53, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0wcc"]
+atlas = ExtResource("2_xwavj")
+region = Rect2(53, 48, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nenq2"]
 atlas = ExtResource("3_xwavj")
@@ -35,13 +42,13 @@ region = Rect2(0, 0, 18, 17)
 atlas = ExtResource("5_nenq2")
 region = Rect2(18, 0, 18, 17)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s1ycm"]
-atlas = ExtResource("5_ipns3")
-region = Rect2(0, 0, 16, 22)
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4w8v"]
+atlas = ExtResource("2_xwavj")
+region = Rect2(0, 0, 53, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_shcg2"]
-atlas = ExtResource("5_ipns3")
-region = Rect2(16, 0, 16, 22)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwavj"]
+atlas = ExtResource("2_xwavj")
+region = Rect2(53, 48, 53, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ile5s"]
 animations = [{
@@ -51,10 +58,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w8i8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtq4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0wcc")
 }],
 "loop": false,
 "name": &"ATTACK",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -88,10 +101,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s1ycm")
+"texture": SubResource("AtlasTexture_c4w8v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_shcg2")
+"texture": SubResource("AtlasTexture_xwavj")
 }],
 "loop": true,
 "name": &"IDEL",
@@ -106,9 +119,10 @@ script = ExtResource("1_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=732625353]
 position = Vector2(-0.5000038, 0)
-scale = Vector2(20.722223, 15.272727)
+rotation = 0.001013245
+scale = Vector2(9.167, 6.756)
 sprite_frames = SubResource("SpriteFrames_ile5s")
-animation = &"HAPPY"
+animation = &"IDEL"
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=449366528 groups=["enemy_hitbox"]]
 collision_layer = 8
