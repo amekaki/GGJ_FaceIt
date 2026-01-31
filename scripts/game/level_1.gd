@@ -103,27 +103,27 @@ func _on_beat() -> void:
 				var damage: int = int(damage_arr[i]) if i < damage_arr.size() else 1
 				_spawn_flying_text(attack_word, counter_word, damage, speed)
 				enemy.play_attack()
-		var max_beat: int = _array_max(beat_config)
+			
 		var interval: int = int(wave.get("interval_time", 0))
-		if beat_in_wave == max_beat + interval + 1:
-			wave_start_beat = beat_index
+		if beat_index == wave_start_beat + interval-1:
+			wave_start_beat = beat_index+1
 			current_wave_index += 1
-			## 下一波若 beat_config 含 0，需在过渡节拍立即生成（否则会跳过 beat 0）
-			if current_wave_index < waves.size():
-				var next_wave: Dictionary = waves[current_wave_index]
-				var next_words: Array = next_wave.get("attack_words", [])
-				var next_counter: Array = next_wave.get("counterattack_words", [])
-				var next_damage: Array = next_wave.get("damage_value", [])
-				var next_beat_cfg: Array = next_wave.get("beat_config", [])
-				for j in range(next_beat_cfg.size()):
-					if j >= next_words.size():
-						continue
-					if int(next_beat_cfg[j]) == 0:
-						var aw: String = next_words[j] if next_words[j] is String else str(next_words[j])
-						var cw: String = next_counter[j] if j < next_counter.size() and next_counter[j] is String else aw
-						var dmg: int = int(next_damage[j]) if j < next_damage.size() else 1
-						_spawn_flying_text(aw, cw, dmg, speed, current_wave_index)
-						enemy.play_attack()
+		# 	## 下一波若 beat_config 含 0，需在过渡节拍立即生成（否则会跳过 beat 0）
+		# 	if current_wave_index < waves.size():
+		# 		var next_wave: Dictionary = waves[current_wave_index]
+		# 		var next_words: Array = next_wave.get("attack_words", [])
+		# 		var next_counter: Array = next_wave.get("counterattack_words", [])
+		# 		var next_damage: Array = next_wave.get("damage_value", [])
+		# 		var next_beat_cfg: Array = next_wave.get("beat_config", [])
+		# 		for j in range(next_beat_cfg.size()):
+		# 			if j >= next_words.size():
+		# 				continue
+		# 			if int(next_beat_cfg[j]) == 0:
+		# 				var aw: String = next_words[j] if next_words[j] is String else str(next_words[j])
+		# 				var cw: String = next_counter[j] if j < next_counter.size() and next_counter[j] is String else aw
+		# 				var dmg: int = int(next_damage[j]) if j < next_damage.size() else 1
+		# 				_spawn_flying_text(aw, cw, dmg, speed, current_wave_index)
+		# 				enemy.play_attack()
 	beat_index += 1
 	beat_timer.start(60.0 / beat_bpm)
 
@@ -156,8 +156,8 @@ func _on_flying_text_missed(ft: Area2D) -> void:
 	if beat_config.size() > 0 and wave_missed_count[wi] == beat_config.size():
 		enemy.play_happy()
 	miss_count += 1
-	if miss_count >= _config.MAX_MISS_COUNT:
-		_finish_game(false)
+	# if miss_count >= _config.MAX_MISS_COUNT:
+	# 	_finish_game(false)
 
 func _on_flying_text_hit_enemy(ft: Node) -> void:
 	if game_over:

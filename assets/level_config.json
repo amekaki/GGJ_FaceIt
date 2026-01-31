@@ -1,26 +1,26 @@
 {
-  "beat_bpm": 240,
+  "beat_bpm": 120,
   "waves": [
 	{
 	  "attack_words": ["你", "好", "笨"],
 	  "counterattack_words": ["你", "才", "笨"],
-	  "damage_value": [20, 20, 20],
-	  "beat_config": [0, 2, 6],
-	  "interval_time": 7
+	  "damage_value": [1, 1, 1],
+	  "beat_config": [0, 1, 3],
+	  "interval_time": 4
 	},
 	{
 	  "attack_words": ["菜", "鸡"],
 	  "counterattack_words": ["强", "啊"],
-	  "damage_value": [20, 20],
-	  "beat_config": [1, 3],
-	  "interval_time": 3
+	  "damage_value": [1, 1],
+	  "beat_config": [0, 2],
+	  "interval_time": 4
 	},
 	{
-	  "attack_words": ["不", "行", "就", "别", "玩"],
-	  "counterattack_words": ["行", "你", "来", "试", "试"],
-	  "damage_value": [1, 1, 1, 1, 1],
-	  "beat_config": [1, 2, 3, 4, 5],
-	  "interval_time": 3
+	  "attack_words": ["菜", "鸡"],
+	  "counterattack_words": ["强", "啊"],
+	  "damage_value": [1, 1],
+	  "beat_config": [0, 2],
+	  "interval_time": 4
 	},
 	{
 	  "attack_words": ["哈", "哈"],
