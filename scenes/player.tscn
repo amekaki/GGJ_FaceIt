@@ -94,7 +94,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D"]
-size = Vector2(32, 150)
+size = Vector2(71, 150)
 
 [node name="Player" type="Node2D" unique_id=767241862]
 script = ExtResource("1_script")
@@ -111,5 +111,5 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeflectZone" unique_id=831967009]
-position = Vector2(-28, -1)
+position = Vector2(-27.5, -1)
 shape = SubResource("RectangleShape2D")

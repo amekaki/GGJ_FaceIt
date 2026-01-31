@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dkcuc1c01wdjt"]
+
+[ext_resource type="Script" uid="uid://82b42l7t1sb2" path="res://scenes/levels/level_1/text_boom.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bhogh0in8ofgp" path="res://assets/sprites/level_1/巴格达.png" id="2_r32us"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbw2g"]
+atlas = ExtResource("2_r32us")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dua7x"]
+atlas = ExtResource("2_r32us")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gs1yi"]
+atlas = ExtResource("2_r32us")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1vuk"]
+atlas = ExtResource("2_r32us")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbq5u"]
+atlas = ExtResource("2_r32us")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_boom"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbw2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dua7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gs1yi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1vuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbq5u")
+}],
+"loop": false,
+"name": &"boom",
+"speed": 10.0
+}]
+
+[node name="TextBoom" type="Node2D" unique_id=860647386]
+script = ExtResource("1_script")
+
+[node name="boom" type="AnimatedSprite2D" parent="." unique_id=142113200]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_boom")
+animation = &"boom"

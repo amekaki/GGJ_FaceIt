@@ -5,6 +5,7 @@ extends Node
 @onready var player: Node2D = $GamePlay/Player
 @onready var enemy: Node2D = $GamePlay/Enemy
 @onready var hud: CanvasLayer = $HUD
+@onready var camera: Camera2D = $Camera2D
 @onready var beat_timer: Timer = $BeatTimer
 @onready var tap_sound: AudioStreamPlayer = $TapSound
 @onready var _config: Node = get_node("/root/GameConfig")
@@ -20,6 +21,9 @@ var miss_count: int = 0
 var game_over: bool = false
 var wave_deflected_hit: Dictionary = {}
 var wave_missed_count: Dictionary = {}
+var _shake_remaining: float = 0.0
+const _shake_intensity: float = 8.0
+const _shake_duration: float = 0.12
 
 const FLYING_TEXT_SCENE := preload("res://scenes/flying_text.tscn")
 const POPUP_LEVEL_SCENE := preload("res://scenes/ui/popup_level.tscn")
@@ -127,6 +131,20 @@ func _on_beat() -> void:
 	beat_index += 1
 	beat_timer.start(60.0 / beat_bpm)
 
+func _on_flying_text_deflected(_ft: Node) -> void:
+	_shake_remaining = _shake_duration
+
+func _process(delta: float) -> void:
+	if _shake_remaining > 0 and camera:
+		_shake_remaining -= delta
+		var decay: float = _shake_remaining / _shake_duration
+		camera.offset = Vector2(
+			randf_range(-_shake_intensity, _shake_intensity) * decay,
+			randf_range(-_shake_intensity, _shake_intensity) * decay
+		)
+		if _shake_remaining <= 0:
+			camera.offset = Vector2.ZERO
+
 func _array_max(arr: Array) -> int:
 	var m: int = 0
 	for x in arr:
@@ -143,6 +161,7 @@ func _spawn_flying_text(attack_word: String, counter_word: String, damage: int, 
 	ft.init_attack(enemy.global_position + Vector2(50, 0), attack_word, counter_word, damage, wi, attack_speed)
 	ft.missed.connect(_on_flying_text_missed)
 	ft.hit_enemy.connect(_on_flying_text_hit_enemy)
+	ft.deflected.connect(_on_flying_text_deflected)
 
 func _on_flying_text_missed(ft: Area2D) -> void:
 	if game_over:
@@ -155,7 +174,7 @@ func _on_flying_text_missed(ft: Area2D) -> void:
 	var beat_config: Array = wave.get("beat_config", [])
 	if beat_config.size() > 0 and wave_missed_count[wi] == beat_config.size():
 		enemy.play_happy()
-	miss_count += 1
+	# miss_count += 1
 	# if miss_count >= _config.MAX_MISS_COUNT:
 	# 	_finish_game(false)
 

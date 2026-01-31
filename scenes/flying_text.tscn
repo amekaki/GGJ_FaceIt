@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://ns3dbert3tto"]
 
 [ext_resource type="Script" uid="uid://dhir882gfxswq" path="res://scripts/entities/flying_text.gd" id="1_script"]
-[ext_resource type="FontFile" uid="uid://bfhdbuigs057r" path="res://assets/fonts/像素字 像素字 Regular.ttf" id="2_tqhn3"]
+[ext_resource type="FontFile" uid="uid://fse5jeeww8v7" path="res://assets/fonts/YanXingXiangSu.ttf" id="2_tqhn3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_transparent"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D"]
 size = Vector2(55, 32)
@@ -11,16 +13,32 @@ collision_layer = 2
 collision_mask = 12
 script = ExtResource("1_script")
 
-[node name="Label" type="Label" parent="." unique_id=951840767]
-offset_left = -42.0
-offset_top = -38.0
-offset_right = 42.0
-offset_bottom = 40.0
-theme_override_fonts/font = ExtResource("2_tqhn3")
-theme_override_font_sizes/font_size = 60
-text = "你"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1094773755]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(140, 100)
+render_target_update_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewport" unique_id=1973320458]
+clip_contents = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_selected_color = Color(0.24313726, 0.23137255, 0.10980392, 0.89411765)
+theme_override_colors/font_outline_color = Color(0.21202734, 0.5320962, 0.36588246, 1)
+theme_override_colors/font_shadow_color = Color(4.5734897, 11.794875, 10.442624, 0.839)
+theme_override_fonts/normal_font = ExtResource("2_tqhn3")
+theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/bold_font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxEmpty_transparent")
+bbcode_enabled = true
+text = "[center]你[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1779675895]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1985357816]
 shape = SubResource("RectangleShape2D")

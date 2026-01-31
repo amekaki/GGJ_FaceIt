@@ -25,6 +25,10 @@ animations = [{
 [node name="Level1" type="Node" unique_id=1970178796]
 script = ExtResource("1_script")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1024, 768)
+make_current = true
+
 [node name="Background" type="AnimatedSprite2D" parent="." unique_id=180068650]
 z_index = -1
 position = Vector2(1024, 754.5)
