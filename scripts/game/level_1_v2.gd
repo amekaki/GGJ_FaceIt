@@ -339,10 +339,16 @@ func _try_fire_word(beat_from_ready: int, wave: Dictionary, travel_beats: float)
 			if tap_sound and tap_sound.stream:
 				# 获取当前字的音调配置
 				var pitch_name: String = ""
-				if i < pitch_config.size() and pitch_config[i] != null:
-					pitch_name = str(pitch_config[i]).strip_edges()
-				# 设置音调
+				if pitch_config.size() > 0 and i < pitch_config.size():
+					var pitch_value = pitch_config[i]
+					if pitch_value != null:
+						pitch_name = str(pitch_value).strip_edges()
+				# 设置音调（必须在播放前设置）
 				var pitch_scale: float = _get_pitch_scale(pitch_name)
+				# 停止当前播放（如果有）以确保pitch_scale生效
+				if tap_sound.playing:
+					tap_sound.stop()
+				print("pitch_scale: ", pitch_scale)
 				tap_sound.pitch_scale = pitch_scale
 				tap_sound.play()
 			if _word_stack and _word_stack.has_method("fire_first_and_drop_next"):
@@ -430,12 +436,18 @@ func _on_flying_text_deflected(_ft: Node) -> void:
 		# 直接访问word_index和spawn_wave_index属性（flying_text已定义这些属性）
 		# 使用spawn_wave_index来获取对应的wave配置
 		var wave_idx: int = _ft.spawn_wave_index
-		if wave_idx < waves.size() and _ft.word_index >= 0:
+		if wave_idx >= 0 and wave_idx < waves.size() and _ft.word_index >= 0:
 			var wave: Dictionary = waves[wave_idx]
 			var pitch_config: Array = wave.get("pitch_config", [])
-			if _ft.word_index < pitch_config.size():
-				var pitch_name: String = str(pitch_config[_ft.word_index])
-				pitch_scale = _get_pitch_scale(pitch_name)
+			if pitch_config.size() > 0 and _ft.word_index < pitch_config.size():
+				var pitch_value = pitch_config[_ft.word_index]
+				if pitch_value != null:
+					var pitch_name: String = str(pitch_value).strip_edges()
+					pitch_scale = _get_pitch_scale(pitch_name)
+		# 停止当前播放（如果有）以确保pitch_scale生效
+		if tap_sound.playing:
+			tap_sound.stop()
+		print("pitch_scale: ", pitch_scale)
 		tap_sound.pitch_scale = pitch_scale
 		tap_sound.play()
 	_shake_remaining = _shake_duration
@@ -496,14 +508,62 @@ func _process(delta: float) -> void:
 			camera.offset = Vector2.ZERO
 
 func _on_enemy_died() -> void:
-	_finish_game(true)
+	_show_level_complete_text()
 
 func _on_player_died() -> void:
 	_finish_game(false)
 
-func _finish_game(victory: bool) -> void:
+func _show_level_complete_text() -> void:
+	# 显示"Level1通关"文字，持续2秒
 	game_over = true
 	beat_timer.stop()
+	
+	# 创建CanvasLayer用于显示通关文字（确保在最上层）
+	var complete_layer: CanvasLayer = CanvasLayer.new()
+	complete_layer.name = "LevelCompleteLayer"
+	add_child(complete_layer)
+	
+	# 创建通关文字Label
+	var complete_label: Label = Label.new()
+	complete_label.name = "LevelCompleteLabel"
+	complete_label.anchors_preset = Control.PRESET_FULL_RECT
+	complete_label.offset_left = 0
+	complete_label.offset_top = 0
+	complete_label.offset_right = 0
+	complete_label.offset_bottom = 0
+	complete_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	complete_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	complete_label.text = "Level1通关"
+	# 使用与WaveWarningLabel相同的字体
+	if wave_warning_label:
+		var font = wave_warning_label.get_theme_font("font")
+		if font:
+			complete_label.add_theme_font_override("font", font)
+	complete_label.add_theme_font_size_override("font_size", 100)
+	complete_label.add_theme_color_override("font_color", Color(1, 1, 0.2, 1))
+	complete_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	complete_label.add_theme_constant_override("outline_size", 8)
+	complete_layer.add_child(complete_label)
+	
+	# 2秒后显示弹窗
+	var timer: Timer = Timer.new()
+	timer.wait_time = 5.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): _on_complete_text_finished(complete_layer))
+	add_child(timer)
+	timer.start()
+
+func _on_complete_text_finished(complete_layer: CanvasLayer) -> void:
+	# 移除通关文字层
+	if is_instance_valid(complete_layer):
+		complete_layer.queue_free()
+	# 显示弹窗
+	_finish_game(true)
+
+func _finish_game(victory: bool) -> void:
+	if not game_over:
+		game_over = true
+		beat_timer.stop()
 	var popup: CanvasLayer = POPUP_LEVEL_SCENE.instantiate()
 	add_child(popup)
 	if victory:

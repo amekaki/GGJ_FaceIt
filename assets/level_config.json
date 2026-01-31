@@ -16,9 +16,9 @@
 				"才",
 				"笨"
 			],
-			"pitch_config": ["do", "mi", "si0"],
+			"pitch_config": ["do", "mi", "si2"],
 			"damage_value": [
-				1,
+				10,
 				10,
 				10
 			],
@@ -30,7 +30,7 @@
 			"travel_beats": 4.0,
 			"interval_time":16,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value":10
+			"sentence_damage_value":100
 		},
 		{
 			"get_ready_time": 2.0,
