@@ -1,11 +1,13 @@
 {
-	"beat_bpm": 120.0,
+	"beat_bpm": 90.0,
 	"waves": [
 		{
+			"get_ready_time": 2.0,
+			"attack_wait_time": 2.0,
 			"attack_words": [
-				"你",
-				"好",
-				"笨"
+				"你好",
+				"笨蛋",
+				"啊"
 			],
 			"counterattack_words": [
 				"你",
@@ -22,9 +24,14 @@
 				1.0,
 				3.0
 			],
-			"interval_time": 4.0
+			"travel_beats": 4.0,
+			"interval_time": 4.0,
+			"attack_sentence": "你才是！！！",
+			"sentence_damage_value": 16.0
 		},
 		{
+			"get_ready_time": 2.0,
+			"attack_wait_time": 2.0,
 			"attack_words": [
 				"菜",
 				"鸡"
@@ -41,64 +48,10 @@
 				0.0,
 				2.0
 			],
-			"interval_time": 4.0
-		},
-		{
-			"attack_words": [
-				"菜",
-				"鸡"
-			],
-			"counterattack_words": [
-				"强",
-				"啊"
-			],
-			"damage_value": [
-				1.0,
-				1.0
-			],
-			"beat_config": [
-				0.0,
-				2.0
-			],
-			"interval_time": 4.0
-		},
-		{
-			"attack_words": [
-				"哈",
-				"哈"
-			],
-			"counterattack_words": [
-				"呵",
-				"呵"
-			],
-			"damage_value": [
-				3.0,
-				3.0
-			],
-			"beat_config": [
-				1.0,
-				2.0
-			],
-			"interval_time": 8.0
-		},
-		{
-			"attack_words": [
-				"再",
-				"见"
-			],
-			"counterattack_words": [
-				"不",
-				"送"
-			],
-			"damage_value": [
-				5.0,
-				5.0
-			],
-			"beat_config": [
-				1.0,
-				3.0
-			],
-			"interval_time": 0.0
+			"travel_beats": 4.0,
+			"interval_time": 12.0,
+			"attack_sentence": "很强！",
+			"sentence_damage_value": 16.0
 		}
 	]
 }

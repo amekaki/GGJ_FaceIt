@@ -37,9 +37,8 @@ func try_deflect() -> void:
 	for node in _texts_in_zone:
 		if not is_instance_valid(node):
 			continue
-		if node.has_method("deflect"):
-			node.deflect()
-			_texts_in_zone.clear()
+		if node.has_method("deflect") and node.deflect():
+			_texts_in_zone.erase(node)
 			play_attack()
 			return
 

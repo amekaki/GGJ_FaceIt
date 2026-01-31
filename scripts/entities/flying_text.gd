@@ -20,6 +20,8 @@ var _deflect_t: float = 1.0
 var _anim_time: float = 0.0
 var _impact_t: float = 0.0  ## 被玩家击中时的冲击效果时长
 var _vanish_t: float = 0.0  ## 击中玩家时的消失效果时长
+var _deflect_explode_only: bool = false  ## V2: 击中即爆炸，不反弹
+var _is_counter_sentence: bool = false  ## V2: 反击句，从玩家飞向怪物
 
 const TEXT_BOOM_SCENE := preload("res://scenes/levels/level_1/text_boom.tscn")
 
@@ -44,12 +46,14 @@ func _format_impact_text(txt: String, color: String = "#ffffff") -> String:
 	## 冲击时刻：很粗的描边
 	return "[center][outline_size=14][outline_color=%s]%s[/outline_color][/outline_size][/center]" % [color, txt]
 
-func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: String = "", damage: int = 1, wave_index: int = 0, custom_speed: float = -1.0) -> void:
+func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: String = "", damage: int = 1, wave_index: int = 0, custom_speed: float = -1.0, deflect_explode_only: bool = false) -> void:
 	global_position = spawn_pos
 	spawn_wave_index = wave_index
 	_word = attack_word if attack_word.is_empty() == false else _config.get_random_attack_word()
 	_counter_word = counter_word if counter_word.is_empty() == false else _config.get_counter_word_for(_word)
 	_damage = damage
+	_deflect_explode_only = deflect_explode_only
+	_is_counter_sentence = false
 	_state = State.ATTACKING
 	var speed: float = custom_speed if custom_speed > 0 else _config.TEXT_SPEED_ATTACK
 	_velocity = Vector2(speed, 0)
@@ -60,12 +64,29 @@ func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: Str
 	scale = Vector2(0.4, 0.4)
 	modulate = Color(1, 1, 1, 0)
 
+func init_counter_sentence(spawn_pos: Vector2, sentence: String, damage: int, speed: float) -> void:
+	global_position = spawn_pos
+	_word = sentence
+	_counter_word = ""
+	_damage = damage
+	_is_counter_sentence = true
+	_deflect_explode_only = false
+	_state = State.RETURNING
+	_velocity = Vector2(-speed, 0)
+	rich_label.text = _format_attack_text(_word)
+	scale = Vector2(1.0, 1.0)
+	modulate = Color(1, 1, 1, 1)
+	_entrance_t = 1.0
+
 func get_damage() -> int:
 	return _damage
 
-func deflect() -> void:
+func deflect() -> bool:
 	if _state != State.ATTACKING or not _in_deflect_zone:
-		return
+		return false
+	if _deflect_explode_only:
+		_deflect_explode()
+		return true
 	_state = State.RETURNING
 	rich_label.text = _format_impact_text(_counter_word, "#ffdd44")
 	var prev_speed: float = abs(_velocity.x)
@@ -76,12 +97,22 @@ func deflect() -> void:
 	_impact_t = 0.18
 	scale = Vector2(1.2, 1.2)
 	deflected.emit(self)
+	return true
+
+func _deflect_explode() -> void:
+	var parent_node: Node = get_parent()
+	if parent_node:
+		var boom_inst: Node2D = TEXT_BOOM_SCENE.instantiate()
+		parent_node.add_child(boom_inst)
+		boom_inst.global_position = global_position
+	deflected.emit(self)
+	queue_free()
 
 func is_attacking() -> bool:
 	return _state == State.ATTACKING
 
 func is_returning() -> bool:
-	return _state == State.RETURNING
+	return _state == State.RETURNING or _is_counter_sentence
 
 func enter_deflect_zone() -> void:
 	_in_deflect_zone = true
@@ -160,6 +191,7 @@ func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("player_deflect_zone"):
 		if _state == State.ATTACKING:
 			## 文字飞出击打区未被弹反，击中玩家
+			print("flying text hit player")
 			_start_hit_player_effect()
 		exit_deflect_zone()
 

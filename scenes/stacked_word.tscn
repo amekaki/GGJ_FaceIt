@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ckx0vnfnc4y53"]
+
+[ext_resource type="Script" path="res://scripts/game/stacked_word.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://fse5jeeww8v7" path="res://assets/fonts/YanXingXiangSu.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_transparent"]
+
+[node name="StackedWord" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -35.0
+offset_top = -30.0
+offset_right = 35.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxEmpty_transparent")
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "你"
