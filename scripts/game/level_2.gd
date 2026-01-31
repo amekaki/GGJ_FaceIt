@@ -19,7 +19,7 @@ func _on_pass_pressed() -> void:
 	var popup: CanvasLayer = POPUP_LEVEL_SCENE.instantiate()
 	add_child(popup)
 	popup.show_popup("游戏通关", "进入游戏结束界面")
-	popup.pressed.connect(_go_to_end_screen)
+	popup.pressed.connect(_go_to_end_screen) # 第二关结束触发
 
 func _go_to_end_screen() -> void:
 	get_tree().change_scene_to_file(SCENE_END)

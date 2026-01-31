@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://btnagtrqghc1" path="res://scripts/entities/player.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dg8he3t05d6gw" path="res://assets/test/player/开心跳技能.png" id="2_dqkch"]
-[ext_resource type="Texture2D" uid="uid://cxotlaeugkwyr" path="res://assets/test/player/开心走.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://ntdig2bla7cj" path="res://assets/test/player/正常跳.png" id="3_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="4_fjrip"]
+[ext_resource type="Texture2D" uid="uid://dqmc2o23oahv3" path="res://assets/test/player/开心静止.png" id="5_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
 atlas = ExtResource("2_dqkch")
@@ -31,12 +31,12 @@ atlas = ExtResource("4_fjrip")
 region = Rect2(48, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
-atlas = ExtResource("3_qlg0r")
-region = Rect2(0, 0, 18, 17)
+atlas = ExtResource("5_qlg0r")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
-atlas = ExtResource("3_qlg0r")
-region = Rect2(18, 0, 18, 17)
+atlas = ExtResource("5_qlg0r")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
 animations = [{

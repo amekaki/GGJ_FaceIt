@@ -1,25 +1,50 @@
-[gd_scene load_steps=6 format=3 uid="uid://level1_01"]
+[gd_scene format=3 uid="uid://bj6jbvfg1uov7"]
 
-[ext_resource type="Script" path="res://scripts/game/level_1.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://debyaw08rxidc" path="res://scripts/game/level_1.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bplayer01" path="res://scenes/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://benemy01" path="res://scenes/enemy.tscn" id="3_enemy"]
 [ext_resource type="PackedScene" uid="uid://bhud01" path="res://scenes/hud.tscn" id="4_hud"]
-[ext_resource type="AudioStream" path="res://assets/music/tap.wav" id="5_tap"]
+[ext_resource type="AudioStream" uid="uid://dvse3vpqmm1uq" path="res://assets/music/tap.wav" id="5_tap"]
+[ext_resource type="Texture2D" uid="uid://bav8uf6lkevfy" path="res://assets/sprites/level_1/background.png" id="6_sk5k4"]
 
-[node name="Level1" type="Node"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc4kc"]
+atlas = ExtResource("6_sk5k4")
+region = Rect2(0, 0, 1200, 896)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s8va5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc4kc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Level1" type="Node" unique_id=1970178796]
 script = ExtResource("1_script")
 
-[node name="GamePlay" type="Node2D" parent="."]
+[node name="Background" type="AnimatedSprite2D" parent="." unique_id=180068650]
+z_index = -1
+position = Vector2(1024, 754.5)
+scale = Vector2(1.695, 1.6774553)
+sprite_frames = SubResource("SpriteFrames_s8va5")
 
-[node name="Player" parent="GamePlay" instance=ExtResource("2_player")]
+[node name="GamePlay" type="Node2D" parent="." unique_id=1706315877]
+position = Vector2(-6, 5)
 
-[node name="Enemy" parent="GamePlay" instance=ExtResource("3_enemy")]
+[node name="Player" parent="GamePlay" unique_id=1730559583 instance=ExtResource("2_player")]
+position = Vector2(1900, 1053)
 
-[node name="HUD" parent="." instance=ExtResource("4_hud")]
+[node name="Enemy" parent="GamePlay" unique_id=978418794 instance=ExtResource("3_enemy")]
+position = Vector2(220, 976)
 
-[node name="TapSound" type="AudioStreamPlayer" parent="."]
+[node name="HUD" parent="." unique_id=809059913 instance=ExtResource("4_hud")]
+
+[node name="TapSound" type="AudioStreamPlayer" parent="." unique_id=1292906844]
 stream = ExtResource("5_tap")
 
-[node name="BeatTimer" type="Timer" parent="."]
+[node name="BeatTimer" type="Timer" parent="." unique_id=1930897173]
 wait_time = 0.5
 one_shot = true

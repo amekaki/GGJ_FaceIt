@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://benemy01"]
 
-[ext_resource type="Script" uid="uid://b0tq5ty75a45b" path="res://scripts/entities/enemy.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/entities/enemy.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dfy12ppduyl07" path="res://assets/test/player/愤怒跳.png" id="2_xwavj"]
 [ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="3_xwavj"]
 [ext_resource type="Texture2D" uid="uid://scdqwoiq1gar" path="res://assets/test/player/悲伤跳.png" id="4_md484"]
