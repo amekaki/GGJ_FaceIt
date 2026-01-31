@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://biup1rqmtys3i"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bplayer01" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://benemy01" path="res://scenes/enemy.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://bhud01" path="res://scenes/hud.tscn" id="4_hud"]
+[ext_resource type="AudioStream" uid="uid://dvse3vpqmm1uq" path="res://assets/music/tap.wav" id="5_tap"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="5_tefeu"]
+
+[node name="Main" type="Node" unique_id=1456860730]
+script = ExtResource("1_script")
+
+[node name="GamePlay" type="Node2D" parent="." unique_id=1534581250]
+
+[node name="Player" parent="GamePlay" unique_id=688311614 instance=ExtResource("2_player")]
+
+[node name="Enemy" parent="GamePlay" unique_id=1004746888 instance=ExtResource("3_enemy")]
+
+[node name="HUD" parent="." unique_id=1976483508 instance=ExtResource("4_hud")]
+script = ExtResource("5_tefeu")
+
+[node name="TapSound" type="AudioStreamPlayer" parent="." unique_id=1628864889]
+stream = ExtResource("5_tap")
+
+[node name="BeatTimer" type="Timer" parent="." unique_id=302592401]
+wait_time = 0.5
+one_shot = true
