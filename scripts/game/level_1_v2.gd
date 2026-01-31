@@ -146,10 +146,15 @@ func _update_waves_by_hp() -> void:
 		waves = normal_waves
 		return
 	var hp_ratio: float = float(enemy.current_hp) / float(enemy.max_hp) if enemy.max_hp > 0 else 1.0
+	print("hp_ratio: ", hp_ratio) 
+	print("advanced_threshold: ", advanced_threshold)
+	print("intermediate_threshold: ", intermediate_threshold)
+	
 	if hp_ratio <= advanced_threshold:
 		waves = advanced_waves
 		current_wave_index = 0
 	elif hp_ratio <= intermediate_threshold:
+		print("intermediate")
 		waves = intermediate_waves
 		current_wave_index = 0
 	else:
@@ -218,7 +223,10 @@ func _on_beat() -> void:
 		# 生成反击文字时，使用当前wave的interval更新wave_start_beat
 		var counter_wave: Dictionary = _pending_counter_wave
 		var interval: int = int(counter_wave.get("interval_time", 4))
+		print("wave_start_beat: ", wave_start_beat)
+		print("interval: ", interval)
 		wave_start_beat = wave_start_beat + interval
+		
 		_spawn_counter_sentence(counter_wave)
 		_pending_counter_wave = {}
 		_phase = "CHARGING"
@@ -360,7 +368,8 @@ func _advance_wave(_success: bool) -> void:
 	# 获取当前wave的interval（用于计算下一个wave的开始时间）
 	var current_wave: Dictionary = waves[current_wave_index] if current_wave_index < waves.size() else {}
 	var interval: int = int(current_wave.get("interval_time", 4))
-	current_wave_index += 1
+	print("interval: ", interval)
+	print("wave_start_beat: ", wave_start_beat)
 	# 如果超出范围，循环到第一个
 	if current_wave_index >= waves.size() and waves.size() > 0:
 		current_wave_index = 0
@@ -372,8 +381,8 @@ func _advance_wave(_success: bool) -> void:
 	_flying_count = 0
 	_hit_count = 0
 	# 显示"下一波即将到达"提示
-	if wave_warning_label:
-		wave_warning_label.visible = true
+	# if wave_warning_label:
+	# 	wave_warning_label.visible = true
 
 func _spawn_flying_text(spawn_pos: Vector2, attack_word: String, _counter_word: String, damage: int, attack_speed: float, deflect_explode: bool, word_idx: int = -1) -> void:
 	var ft: Area2D = FLYING_TEXT_SCENE.instantiate()

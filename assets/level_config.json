@@ -16,9 +16,9 @@
 				"才",
 				"笨"
 			],
-			"pitch_config": ["do", "re", "mi"],
+			"pitch_config": ["do", "mi", "si0"],
 			"damage_value": [
-				100,
+				1,
 				10,
 				10
 			],
@@ -30,7 +30,7 @@
 			"travel_beats": 4.0,
 			"interval_time":16,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value":55
+			"sentence_damage_value":10
 		},
 		{
 			"get_ready_time": 2.0,
@@ -54,7 +54,7 @@
 			"travel_beats": 4.0,
 			"interval_time": 16,
 			"attack_sentence": "很强！",
-			"sentence_damage_value": 55
+			"sentence_damage_value": 10
 		}
 	],
 	"intermediate_waves": [
@@ -84,7 +84,7 @@
 			"travel_beats": 4.0,
 			"interval_time": 16,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value":100
+			"sentence_damage_value":1
 		},
 		{
 			"get_ready_time": 2.0,
@@ -106,9 +106,9 @@
 				2.0
 			],
 			"travel_beats": 4.0,
-			"interval_time": 12.0,
+			"interval_time": 16,
 			"attack_sentence": "很强！",
-			"sentence_damage_value": 30
+			"sentence_damage_value": 1
 		}
 	],
 	"advanced_waves": [
