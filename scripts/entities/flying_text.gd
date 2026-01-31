@@ -41,10 +41,13 @@ func _update_viewport_size_for_counter() -> void:
 		var line_count: int = ceil(float(_word.length()) / 5.0)
 		var height: int = int(max(100, line_count * 80))
 		viewport.size = Vector2i(400, height)
+		# 确保RichTextLabel能够适应内容大小
+		rich_label.fit_content = true
 
 func _format_attack_text(txt: String) -> String:
-	## 怪物发射：大小变化(pulse，透明度变化弱) + 形状扭曲(tornado+shake)
-	return "[center][pulse freq=2.0 color=#ffffffff][tornado radius=12 freq=1.5][shake rate=18 level=3]%s[/shake][/tornado][/pulse][/center]" % txt
+	## 怪物发射：大小变化(pulse，透明度变化弱) + 形状扭曲(tornado+shake) - 增强效果
+	# 减小tornado和shake的半径/level，避免文字超出边界
+	return "[center][pulse freq=3.0 color=#ffffffff][tornado radius=15 freq=2.0][shake rate=25 level=4]%s[/shake][/tornado][/pulse][/center]" % txt
 
 func _format_return_text(txt: String) -> String:
 	## 反弹文字：描边 + 轻微波浪
@@ -55,7 +58,7 @@ func _format_impact_text(txt: String, color: String = "#ffffff") -> String:
 	return "[center][outline_size=14][outline_color=%s]%s[/outline_color][/outline_size][/center]" % [color, txt]
 
 func _format_counter_sentence(txt: String) -> String:
-	## 反击句：每5个字换行
+	## 反击句：每5个字换行，加粗和粗描边
 	var chars: Array[String] = []
 	for i in range(txt.length()):
 		chars.append(txt.substr(i, 1))
@@ -66,11 +69,11 @@ func _format_counter_sentence(txt: String) -> String:
 		if (i + 1) % 5 == 0 or i == chars.size() - 1:
 			lines.append(current_line)
 			current_line = ""
-	var formatted: String = "[center]"
+	var formatted: String = "[center][b][outline_size=10][outline_color=#000000]"
 	for line in lines:
 		formatted += line + "\n"
 	formatted = formatted.trim_suffix("\n")
-	formatted += "[/center]"
+	formatted += "[/outline_color][/outline_size][/b][/center]"
 	return formatted
 
 func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: String = "", damage: int = 1, wave_index: int = 0, custom_speed: float = -1.0, deflect_explode_only: bool = false, word_idx: int = -1) -> void:
@@ -89,6 +92,8 @@ func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: Str
 	_entrance_t = 0.0
 	_deflect_t = 1.0
 	rich_label.text = _format_attack_text(_word)
+	# 确保RichTextLabel能够适应内容大小，避免文字被裁剪
+	rich_label.fit_content = true
 	scale = Vector2(0.4, 0.4)
 	modulate = Color(1, 1, 1, 0)
 
@@ -181,9 +186,9 @@ func _physics_process(delta: float) -> void:
 			queue_free()
 		return
 	elif _state == State.ATTACKING:
-		## 发射中：大小变化更明显 (0.82~1.18) + X/Y 不等比制造扭曲感
-		var breath: float = 0.82 + 0.18 * (1.0 + sin(_anim_time * 4.0))
-		var stretch: float = 1.0 + 0.08 * sin(_anim_time * 3.0)
+		## 发射中：大小变化更明显 (0.75~1.25) + X/Y 不等比制造扭曲感 - 增强效果
+		var breath: float = 0.75 + 0.25 * (1.0 + sin(_anim_time * 5.0))
+		var stretch: float = 1.0 + 0.15 * sin(_anim_time * 4.0)
 		scale = Vector2(breath * stretch, breath / stretch)
 	elif _impact_t > 0:
 		_impact_t -= delta
@@ -226,7 +231,7 @@ func _check_counter_hit_enemy() -> void:
 		)
 		var text_center: Vector2 = global_position
 		if hitbox_rect.has_point(text_center):
-			_has_hit_enemy = true
+			# 调用效果函数，内部会设置_has_hit_enemy标志
 			_start_hit_enemy_effect()
 
 func _on_area_entered(area: Area2D) -> void:
@@ -236,18 +241,24 @@ func _on_area_entered(area: Area2D) -> void:
 		_start_hit_enemy_effect()
 
 func _start_hit_enemy_effect() -> void:
-	print("start hit enemy effect",_has_hit_enemy)
+	# 防止重复调用
 	if _has_hit_enemy:
 		return
 	_has_hit_enemy = true
+	# 停止移动
 	_velocity = Vector2.ZERO
+	# 隐藏文字
 	visible = false
+	# 在文字当前位置创建爆炸效果
 	var parent_node: Node = get_parent()
 	if parent_node:
 		var boom_inst: Node2D = TEXT_BOOM_SCENE.instantiate()
 		parent_node.add_child(boom_inst)
+		# 爆炸位置设置为文字中心位置（文字到达敌人碰撞区域的位置）
 		boom_inst.global_position = global_position
+	# 发出击中敌人信号
 	hit_enemy.emit(self)
+	# 销毁文字节点
 	queue_free()
 
 func _on_area_exited(area: Area2D) -> void:

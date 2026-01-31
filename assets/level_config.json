@@ -1,5 +1,5 @@
 {
-	"beat_bpm": 90.0,
+	"beat_bpm": 180.0,
 	"intermediate_threshold": 0.5,
 	"advanced_threshold": 0.8,
 	"normal_waves": [
@@ -8,15 +8,14 @@
 			"attack_wait_time": 2.0,
 			"attack_words": [
 				"你好",
-				"笨蛋",
-				"啊"
+				"笨蛋"
 			],
 			"counterattack_words": [
 				"你",
 				"才",
 				"笨"
 			],
-			"pitch_config": ["do", "mi", "si2"],
+			"pitch_config": ["do", "si2", "si2"],
 			"damage_value": [
 				10,
 				10,
@@ -24,13 +23,12 @@
 			],
 			"beat_config": [
 				0.0,
-				1.0,
-				3.0
+				2.0
 			],
-			"travel_beats": 4.0,
-			"interval_time":16,
+			"travel_beats": 8,
+			"interval_time": 24,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value":100
+			"sentence_damage_value":10
 		},
 		{
 			"get_ready_time": 2.0,
@@ -51,8 +49,8 @@
 				0.0,
 				2.0
 			],
-			"travel_beats": 4.0,
-			"interval_time": 16,
+			"travel_beats": 8.0,
+			"interval_time": 24,
 			"attack_sentence": "很强！",
 			"sentence_damage_value": 10
 		}
@@ -81,8 +79,8 @@
 				1.0,
 				3.0
 			],
-			"travel_beats": 4.0,
-			"interval_time": 16,
+			"travel_beats": 8.0,
+			"interval_time": 24,
 			"attack_sentence": "你才是！！！",
 			"sentence_damage_value":1
 		},
@@ -105,8 +103,8 @@
 				0.0,
 				2.0
 			],
-			"travel_beats": 4.0,
-			"interval_time": 16,
+			"travel_beats": 8.0,
+			"interval_time": 24,
 			"attack_sentence": "很强！",
 			"sentence_damage_value": 1
 		}
@@ -126,7 +124,7 @@
 				"笨"
 			],
 			"damage_value": [
-				100,
+				10,
 				10,
 				10
 			],
@@ -135,10 +133,10 @@
 				1.0,
 				3.0
 			],
-			"travel_beats": 4.0,
-			"interval_time": 16.0,
+			"travel_beats": 8.0,
+			"interval_time": 24.0,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value":100
+			"sentence_damage_value":10
 		},
 		{
 			"get_ready_time": 2.0,
@@ -159,8 +157,8 @@
 				0.0,
 				2.0
 			],
-			"travel_beats": 4.0,
-			"interval_time": 16.0,
+			"travel_beats": 8.0,
+			"interval_time": 24.0,
 			"attack_sentence": "很强！",
 			"sentence_damage_value": 50
 		}
