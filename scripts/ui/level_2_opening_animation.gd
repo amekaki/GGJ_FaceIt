@@ -6,12 +6,19 @@ extends Control
 @onready var left_arrow: Button = $LeftArrow
 @onready var right_arrow: Button = $RightArrow
 @onready var start_button: Button = $StartButton
+@onready var text_label: Label = $TextLabel
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
 	"res://assets/sprites/start/opening/1.png",
 	"res://assets/sprites/start/opening/2.png",
 	"res://assets/sprites/start/opening/3.png"
+]
+# 文字配置（与图片路径一一对应，如果为空字符串则不显示）
+var text_configs: Array[String] = [
+	"",
+	"",
+	""
 ]
 var current_index: int = 0
 

@@ -169,14 +169,14 @@ func _update_waves_by_hp() -> void:
 	print("advanced_threshold: ", advanced_threshold)
 	print("intermediate_threshold: ", intermediate_threshold)
 	
-	if hp_ratio <= advanced_threshold:
+	if hp_ratio <= intermediate_threshold:
+		print("intermediate")
+		waves = intermediate_waves
+		current_wave_index = 0
+	elif hp_ratio <= advanced_threshold:
 		print("advanced")
 		print("advanced_waves: ", advanced_waves)
 		waves = advanced_waves
-		current_wave_index = 0
-	elif hp_ratio <= intermediate_threshold:
-		print("intermediate")
-		waves = intermediate_waves
 		current_wave_index = 0
 	else:
 		waves = normal_waves
