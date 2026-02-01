@@ -1,25 +1,25 @@
 [gd_scene format=3 uid="uid://bxkvjg5ntofer"]
 
+[ext_resource type="Texture2D" uid="uid://bwm5mmy8g4c2b" path="res://assets/sprites/level_2/悲伤小人/悲伤小人).png" id="1_moxoi"]
 [ext_resource type="Texture2D" uid="uid://74ru3i8b87n1" path="res://assets/test/world_tileset.png" id="2_8jup5"]
 [ext_resource type="Script" uid="uid://byj2c2ayl2qgf" path="res://scripts/level2/boss_rain.gd" id="3_moxoi"]
-[ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="3_wbmma"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8jup5"]
-atlas = ExtResource("3_wbmma")
-region = Rect2(0, 16, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph0ob"]
+atlas = ExtResource("1_moxoi")
+region = Rect2(0, 0, 343, 429)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_moxoi"]
-atlas = ExtResource("3_wbmma")
-region = Rect2(16, 16, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6b1q6"]
+atlas = ExtResource("1_moxoi")
+region = Rect2(343, 0, 343, 429)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ph0ob"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8jup5")
+"texture": SubResource("AtlasTexture_ph0ob")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_moxoi")
+"texture": SubResource("AtlasTexture_6b1q6")
 }],
 "loop": true,
 "name": &"idle",
@@ -108,6 +108,7 @@ size = Vector2(15.999999, 16)
 scale = Vector2(6, 6)
 
 [node name="BossFake" type="AnimatedSprite2D" parent="." unique_id=783487160]
+scale = Vector2(0.055, 0.055)
 sprite_frames = SubResource("SpriteFrames_ph0ob")
 animation = &"idle"
 autoplay = "idle"

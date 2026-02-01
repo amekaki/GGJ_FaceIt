@@ -10,8 +10,8 @@ extends Control
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
-	"res://assets/sprites/level_2/opening/1.png",
-	"res://assets/sprites/level_2/opening/2.png"
+	"res://assets/sprites/level_2/opening/1.jpg",
+	"res://assets/sprites/level_2/opening/2.jpg"
 ]
 # 文字配置（与图片路径一一对应，如果为空字符串则不显示）
 var text_configs: Array[String] = [
