@@ -73,7 +73,7 @@ const POPUP_LEVEL_SCENE := preload("res://scenes/ui/popup_level.tscn")
 const SCENE_LEVEL_2: String = "res://scenes/levels/level_2.tscn"
 const FLOATING_TEXT_SCENE := preload("res://scenes/ui/floating_text.tscn")
 
-const FLOATING_TEXT_DURATION: float = 0.5  # 浮动文字持续时间（可配置）
+const FLOATING_TEXT_DURATION: float = 1  # 浮动文字持续时间（可配置）
 
 func _ready() -> void:
 	_save.save_level(1)
@@ -81,6 +81,8 @@ func _ready() -> void:
 	_apply_layout()
 	hud.bind_enemy(enemy)
 	hud.bind_player(player)
+	# 设置进度条颜色阈值
+	hud.set_thresholds(intermediate_threshold, advanced_threshold)
 	enemy.died.connect(_on_enemy_died)
 	enemy.hp_changed.connect(_on_enemy_hp_changed)
 	player.died.connect(_on_player_died)
@@ -463,7 +465,7 @@ func _on_flying_text_missed(ft: Node) -> void:
 	if ft and ft.has_method("get_damage"):
 		pass
 	# 显示MISS文字（在玩家上方）
-	_show_floating_text("MISS", player.global_position + Vector2(0, -80), Color(1, 0.2, 0.2))
+	_show_floating_text("MISS", player.global_position + Vector2(0, -80), Color(245, 51, 82), 60, FLOATING_TEXT_DURATION, true)
 	_flying_count -= 1
 	if _flying_count == 0:
 		_should_check_resolve_next_beat = true
@@ -473,8 +475,8 @@ func _on_flying_text_hit_enemy(_ft: Node) -> void:
 
 func _on_counter_sentence_hit_enemy(_ft: Node) -> void:
 	enemy.play_damage()
-	# 显示GOOD文字（在敌人上方）
-	_show_floating_text("GOOD！", enemy.global_position + Vector2(0, -80), Color(0.2, 1, 0.2))
+	# 显示"怪物受伤"文字（在敌人上方）
+	_show_floating_text("啊呜", enemy.global_position + Vector2(0, -200), Color(1, 0.2, 0.2), 60, FLOATING_TEXT_DURATION, true)
 	# 敌人受伤后，检查是否需要切换阶段
 	_update_waves_by_hp()
 
@@ -483,6 +485,8 @@ func _on_player_hp_changed(current: int, maximum: int) -> void:
 	var damage: int = _prev_player_hp - current
 	_prev_player_hp = current
 	if damage > 0:
+		# 显示"玩家受伤"文字（在玩家上方）
+		_show_floating_text("哎呀", player.global_position + Vector2(0, -200), Color(1, 0.2, 0.2), 60, FLOATING_TEXT_DURATION, true)
 		# 显示伤害值（在玩家进度条附近）
 		hud.show_damage_text(damage, false)
 
@@ -491,13 +495,15 @@ func _on_enemy_hp_changed(current: int, maximum: int) -> void:
 	var damage: int = _prev_enemy_hp - current
 	_prev_enemy_hp = current
 	if damage > 0:
+		# 显示"怪物受伤"文字（在怪物上方）
+		# _show_floating_text("怪物受伤", enemy.global_position + Vector2(0, -80), Color(1, 0.2, 0.2), 60, FLOATING_TEXT_DURATION, true)
 		# 显示伤害值（在敌人进度条附近）
 		hud.show_damage_text(damage, true)
 
-func _show_floating_text(text: String, pos: Vector2, color: Color = Color.WHITE, font_size: int = 48) -> void:
+func _show_floating_text(text: String, pos: Vector2, color: Color = Color.WHITE, font_size: int = 48, dur: float = FLOATING_TEXT_DURATION, use_custom_font: bool = false) -> void:
 	var ft: Node2D = FLOATING_TEXT_SCENE.instantiate()
 	gameplay.add_child(ft)
-	ft.setup(text, pos, color, font_size, FLOATING_TEXT_DURATION)
+	ft.setup(text, pos, color, font_size, dur, use_custom_font)
 
 func _process(delta: float) -> void:
 	if _shake_remaining > 0 and camera:

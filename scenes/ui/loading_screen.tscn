@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://pgch4q5lqfil"]
+
+[ext_resource type="Script" uid="uid://bbh1rd7uojvng" path="res://scripts/ui/loading_screen.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://twjsc782lbti" path="res://assets/sprites/player/v2/打击/打击.png" id="2_q4fso"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fj0j"]
+atlas = ExtResource("2_q4fso")
+region = Rect2(0, 0, 590, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2kth"]
+atlas = ExtResource("2_q4fso")
+region = Rect2(590, 0, 590, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s41fs"]
+atlas = ExtResource("2_q4fso")
+region = Rect2(1180, 0, 590, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y06jl"]
+atlas = ExtResource("2_q4fso")
+region = Rect2(0, 425, 590, 425)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g5iak"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fj0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2kth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s41fs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y06jl")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="LoadingScreen" type="Control" unique_id=1095747558]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="SpriteContainer" type="Control" parent="." unique_id=915015358]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -200.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteContainer" unique_id=1095022239]
+position = Vector2(78.000015, 104.999985)
+scale = Vector2(0.34237283, 0.37235302)
+sprite_frames = SubResource("SpriteFrames_g5iak")

@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://opening_animation01"]
+
+[ext_resource type="Script" path="res://scripts/ui/opening_animation.gd" id="1_script"]
+
+[node name="OpeningAnimation" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_script")
+
+[node name="ImageContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CurrentImage" type="TextureRect" parent="ImageContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LeftArrow" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -100.0
+offset_right = 120.0
+offset_bottom = -20.0
+text = "<"
+
+[node name="RightArrow" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -20.0
+text = ">"
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -20.0
+text = "开始游戏"
+visible = false

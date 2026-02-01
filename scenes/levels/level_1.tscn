@@ -25,9 +25,8 @@ animations = [{
 [node name="Level1" type="Node" unique_id=1970178796]
 script = ExtResource("1_script")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=34079628]
 position = Vector2(1024, 768)
-make_current = true
 
 [node name="Background" type="AnimatedSprite2D" parent="." unique_id=180068650]
 z_index = -1
@@ -48,6 +47,7 @@ position = Vector2(220, 976)
 
 [node name="TapSound" type="AudioStreamPlayer" parent="." unique_id=1292906844]
 stream = ExtResource("5_tap")
+volume_db = -20.0
 
 [node name="BeatTimer" type="Timer" parent="." unique_id=1930897173]
 wait_time = 0.5
