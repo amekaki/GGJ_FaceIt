@@ -1,5 +1,5 @@
 extends Control
-## 开场动画：支持多张图片，左右箭头切换，最后一张有开始游戏按钮
+## 第二关开场动画：支持多张图片，左右箭头切换，最后一张有开始游戏按钮
 
 @onready var image_container: Control = $ImageContainer
 @onready var current_image: TextureRect = $ImageContainer/CurrentImage
@@ -15,7 +15,7 @@ var image_paths: Array[String] = [
 ]
 var current_index: int = 0
 
-const SCENE_LEVEL_1_V2: String = "res://scenes/levels/level_1_v2.tscn"
+const SCENE_LEVEL_2: String = "res://scenes/levels/level_2.tscn"
 const SCENE_LOADING: String = "res://scenes/ui/loading_screen.tscn"
 
 @onready var _scene_manager: Node = get_node("/root/SceneManager")
@@ -51,7 +51,7 @@ func _on_right_arrow_pressed() -> void:
 		_update_display()
 
 func _on_start_pressed() -> void:
-	# 设置加载完成后进入第一关
-	_scene_manager.set_next_scene(SCENE_LEVEL_1_V2)
+	# 设置加载完成后进入第二关
+	_scene_manager.set_next_scene(SCENE_LEVEL_2)
 	# 进入加载场景
 	get_tree().change_scene_to_file(SCENE_LOADING)

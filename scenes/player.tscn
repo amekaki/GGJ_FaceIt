@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://btnagtrqghc1" path="res://scripts/entities/player.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://drwxhac3mblnx" path="res://assets/sprites/player/v2/受击/Shouting.png" id="3_qlg0r"]
-[ext_resource type="Texture2D" uid="uid://ntdig2bla7cj" path="res://assets/test/player/正常跳.png" id="3_tuyoq"]
-[ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="4_fjrip"]
 [ext_resource type="Texture2D" uid="uid://d2kme37u6lf5o" path="res://assets/sprites/player/v2/静止/静止.png" id="6_fjrip"]
 [ext_resource type="Texture2D" uid="uid://twjsc782lbti" path="res://assets/sprites/player/v2/打击/打击.png" id="6_tuyoq"]
 
@@ -35,17 +33,29 @@ region = Rect2(0, 443, 591, 443)
 atlas = ExtResource("3_qlg0r")
 region = Rect2(0, 0, 591, 443)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("3_qlg0r")
+region = Rect2(0, 443, 591, 443)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
-atlas = ExtResource("3_tuyoq")
-region = Rect2(0, 0, 18, 17)
+atlas = ExtResource("3_qlg0r")
+region = Rect2(0, 0, 591, 443)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(32, 16, 16, 16)
+atlas = ExtResource("6_tuyoq")
+region = Rect2(0, 0, 590, 425)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
-atlas = ExtResource("4_fjrip")
-region = Rect2(48, 16, 16, 16)
+atlas = ExtResource("6_tuyoq")
+region = Rect2(590, 0, 590, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
+atlas = ExtResource("6_tuyoq")
+region = Rect2(1180, 0, 590, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
+atlas = ExtResource("6_tuyoq")
+region = Rect2(0, 425, 590, 425)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
 atlas = ExtResource("6_fjrip")
@@ -90,6 +100,9 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_d2wvv")
 }],
 "loop": true,
@@ -102,6 +115,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jej6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ls1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfm1y")
 }],
 "loop": false,
 "name": &"HAPPY",
@@ -135,7 +154,7 @@ script = ExtResource("1_script")
 position = Vector2(3.1220183, -0.9467783)
 scale = Vector2(0.563, 0.522)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"DEAD"
+animation = &"DAMAGE"
 
 [node name="DeflectZone" type="Area2D" parent="." unique_id=2021259656 groups=["player_deflect_zone"]]
 position = Vector2(28, 1)

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FaceIt"
-run/main_scene="res://scenes/ui/start_screen.tscn"
+run/main_scene="uid://blevel1v201"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameConfig="*res://scripts/autoload/game_config.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
 MusicManager="*res://scripts/autoload/music_manager.gd"
+SceneManager="*res://scripts/autoload/scene_manager.gd"
 
 [display]
 

@@ -1,11 +1,10 @@
 extends Control
-## 关卡 2：暂为「通过本关」按钮，点击后弹窗「游戏通关」→ 进入结束界面
+## 关卡 2：暂为「通过本关」按钮，点击后进入第二关结尾动画
 
 @onready var btn_pass: Button = $MarginContainer/VBoxContainer/BtnPass
 @onready var exit_btn: Button = $ExitButton
 @onready var _save: Node = get_node("/root/SaveManager")
-const POPUP_LEVEL_SCENE := preload("res://scenes/ui/popup_level.tscn")
-const SCENE_END: String = "res://scenes/ui/end_screen.tscn"
+const SCENE_LEVEL_2_ENDING: String = "res://scenes/ui/level_2_ending_animation.tscn"
 
 func _ready() -> void:
 	_save.save_level(2)
@@ -16,10 +15,5 @@ func _on_exit_pressed() -> void:
 	get_tree().quit()
 
 func _on_pass_pressed() -> void:
-	var popup: CanvasLayer = POPUP_LEVEL_SCENE.instantiate()
-	add_child(popup)
-	popup.show_popup("游戏通关", "进入游戏结束界面")
-	popup.pressed.connect(_go_to_end_screen) # 第二关结束触发
-
-func _go_to_end_screen() -> void:
-	get_tree().change_scene_to_file(SCENE_END)
+	# 进入第二关结尾动画
+	get_tree().change_scene_to_file(SCENE_LEVEL_2_ENDING)

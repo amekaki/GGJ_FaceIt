@@ -1,16 +1,16 @@
 extends Control
-## 漫画切换场景：显示多张图片，每张停留3秒，最后一张显示按钮，带切入切出动画
+## 第二关结尾动画：显示多张图片，每张停留3秒，最后一张显示结束游戏按钮，带切入切出动画
 
 @onready var image_container: Control = $ImageContainer
 @onready var current_image: TextureRect = $ImageContainer/CurrentImage
 @onready var next_image: TextureRect = $ImageContainer/NextImage
-@onready var next_button: Button = $NextButton
+@onready var end_button: Button = $EndButton
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
-	"res://assets/sprites/level_1/ending/1.png",
-	"res://assets/sprites/level_1/ending/2.png",
-	"res://assets/sprites/level_1/ending/3.png"
+	"res://assets/sprites/level_2/ending/1.png",
+	"res://assets/sprites/level_2/ending/2.png",
+	"res://assets/sprites/level_2/ending/3.png"
 ]
 var current_index: int = 0
 var display_timer: Timer
@@ -18,17 +18,13 @@ var is_last_image: bool = false
 var is_transitioning: bool = false
 var transition_tween: Tween
 
-const SCENE_LEVEL_2: String = "res://scenes/levels/level_2.tscn"
-const SCENE_LOADING: String = "res://scenes/ui/loading_screen.tscn"
-const SCENE_LEVEL_2_OPENING: String = "res://scenes/ui/level_2_opening_animation.tscn"
+const SCENE_END: String = "res://scenes/ui/end_screen.tscn"
 const TRANSITION_DURATION: float = 0.5  # 切换动画持续时间
 
-@onready var _scene_manager: Node = get_node("/root/SceneManager")
-
 func _ready() -> void:
-	next_button.pressed.connect(_on_next_pressed)
-	next_button.visible = false
-	next_button.modulate.a = 0.0
+	end_button.pressed.connect(_on_end_pressed)
+	end_button.visible = false
+	end_button.modulate.a = 0.0
 	# 初始化下一张图片为透明
 	next_image.modulate.a = 0.0
 	# 创建定时器用于自动切换
@@ -110,18 +106,16 @@ func _swap_images() -> void:
 func _on_display_timer_timeout() -> void:
 	if is_last_image:
 		# 最后一张图片，显示按钮（带淡入效果）
-		next_button.modulate.a = 0.0
-		next_button.visible = true
+		end_button.modulate.a = 0.0
+		end_button.visible = true
 		if transition_tween:
 			transition_tween.kill()
 		transition_tween = create_tween()
-		transition_tween.tween_property(next_button, "modulate:a", 1.0, TRANSITION_DURATION)
+		transition_tween.tween_property(end_button, "modulate:a", 1.0, TRANSITION_DURATION)
 	else:
 		# 切换到下一张图片
 		_transition_to_next()
 
-func _on_next_pressed() -> void:
-	# 设置加载完成后进入第二关开场动画
-	_scene_manager.set_next_scene(SCENE_LEVEL_2_OPENING)
-	# 进入加载场景
-	get_tree().change_scene_to_file(SCENE_LOADING)
+func _on_end_pressed() -> void:
+	# 进入游戏结束界面
+	get_tree().change_scene_to_file(SCENE_END)
