@@ -16,9 +16,9 @@ var image_paths: Array[String] = [
 ]
 # 文字配置（与图片路径一一对应，如果为空字符串则不显示）
 var text_configs: Array[String] = [
-	"开场动画，啦啦啦啦啦",
-	"第二个画面",
-	""
+	"面具掩盖下的世界，唯有影子还在呼吸",
+	"千万张脸孔，又有几颗真心",
+	"心间的光，是唯一能驱散黑暗的利刃"
 ]
 var current_index: int = 0
 

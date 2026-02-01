@@ -1,37 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://start_screen01"]
+[gd_scene format=3 uid="uid://bjpb323o5xdmn"]
 
-[ext_resource type="Script" path="res://scripts/ui/start_screen.gd" id="1_script"]
-[ext_resource type="FontFile" path="res://assets/fonts/AaSiHaSiHaShouXieTi-2.ttf" id="2_font"]
+[ext_resource type="Script" uid="uid://bou1oxargrrwu" path="res://scripts/ui/start_screen.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://cq3wcesnmbqx5" path="res://assets/fonts/AaSiHaSiHaShouXieTi-2.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://cnla45apqku6b" path="res://assets/sprites/start/background.png" id="2_ihgl4"]
 
-[node name="StartScreen" type="Control"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kolwf"]
+atlas = ExtResource("2_ihgl4")
+region = Rect2(0, 0, 1200, 896)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_adf7y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kolwf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="StartScreen" type="Control" unique_id=284168202]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2105798949]
+position = Vector2(1036.4, 771.008)
+scale = Vector2(1.7273333, 1.7432857)
+sprite_frames = SubResource("SpriteFrames_adf7y")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1773247660]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 696.0
+offset_right = 24.0
+offset_bottom = 696.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1859553058]
 layout_mode = 2
 theme_override_constants/separation = 60
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1269478815]
+visible = false
 layout_mode = 2
+theme_override_colors/font_color = Color(0.28036812, 0.06314782, 0.019780403, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 120
+text = "START"
 horizontal_alignment = 1
 vertical_alignment = 1
-text = "START"
 
-[node name="HintLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="HintLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=765825168]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.9964406, 0.9110563, 0.8904944, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 60
+text = "--按任意键开始--"
 horizontal_alignment = 1
 vertical_alignment = 1
-text = "按任意键开始"

@@ -2,7 +2,7 @@ extends Node
 ## 音乐管理器：管理开始音乐，在场景切换时保持播放
 
 var start_music_player: AudioStreamPlayer
-var start_music_path: String = "res://assets/music/开始.mp3"
+var start_music_path: String = "res://assets/music/sad.mp3"
 
 func _ready() -> void:
 	# 创建音乐播放器
@@ -25,6 +25,9 @@ func play_start_music() -> void:
 		push_error("Failed to load start music: " + start_music_path)
 		return
 	start_music_player.stream = stream
+	# 设置播放速度为1.5倍速
+	start_music_player.pitch_scale = 1.5
+
 	# 设置循环播放
 	if stream is AudioStreamMP3:
 		var mp3_stream: AudioStreamMP3 = stream as AudioStreamMP3
