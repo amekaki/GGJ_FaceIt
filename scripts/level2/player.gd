@@ -133,5 +133,5 @@ func take_damage(damage: int) -> void:
 func die() -> void:
 	print("Player 死亡!")
 	# 这里可以添加死亡逻辑，比如重新开始关卡
-	# queue_free()
-	# get_tree().reload_current_scene()
+	queue_free()
+	get_tree().reload_current_scene()
