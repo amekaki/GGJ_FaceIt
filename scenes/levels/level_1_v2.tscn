@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://by06glfkkppun" path="res://scripts/game/level_1_v2.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bplayer01" path="res://scenes/player.tscn" id="2_player"]
-[ext_resource type="Texture2D" uid="uid://db23e4m4xf5nr" path="res://assets/sprites/level_1/图1背景/閲嶇粯-1769923304360.png" id="2_sb0na"]
+[ext_resource type="Texture2D" uid="uid://b7ti1qqhbg6p" path="res://assets/sprites/level_1/background_2.png" id="2_sb0na"]
 [ext_resource type="PackedScene" uid="uid://benemy01" path="res://scenes/enemy.tscn" id="3_enemy"]
 [ext_resource type="PackedScene" uid="uid://bhud01" path="res://scenes/hud.tscn" id="4_hud"]
 [ext_resource type="AudioStream" uid="uid://cjhxubpgp3t3u" path="res://assets/music/level_1.mp3" id="6_music"]
