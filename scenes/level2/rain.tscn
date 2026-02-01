@@ -1,26 +1,26 @@
 [gd_scene format=3 uid="uid://dqygvvi15igyb"]
 
 [ext_resource type="Script" uid="uid://dg0nf5g6n8doc" path="res://scripts/level2/rain.gd" id="2_3rx3m"]
-[ext_resource type="Texture2D" uid="uid://74ru3i8b87n1" path="res://assets/test/world_tileset.png" id="2_e6kek"]
+[ext_resource type="Texture2D" uid="uid://c4b8xyyd2bdym" path="res://assets/maze/tear.png" id="2_i2ly5"]
 [ext_resource type="AudioStream" uid="uid://cxcdjl6rgypq6" path="res://assets/maze/hurt.wav" id="3_3rx3m"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rcxrv"]
-atlas = ExtResource("2_e6kek")
-region = Rect2(80, 96, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb0rb"]
+atlas = ExtResource("2_i2ly5")
+region = Rect2(0, 0, 61, 61)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e6kek"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rcxrv")
+"texture": SubResource("AtlasTexture_wb0rb")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6kek"]
-size = Vector2(48, 64)
+[sub_resource type="CircleShape2D" id="CircleShape2D_3rx3m"]
+radius = 24.0
 
 [sub_resource type="Animation" id="Animation_i2ly5"]
 length = 0.001
@@ -88,11 +88,10 @@ z_index = 5
 script = ExtResource("2_3rx3m")
 
 [node name="Rain" type="AnimatedSprite2D" parent="." unique_id=1914641965]
-scale = Vector2(3, 4)
 sprite_frames = SubResource("SpriteFrames_e6kek")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=370396952]
-shape = SubResource("RectangleShape2D_e6kek")
+shape = SubResource("CircleShape2D_3rx3m")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1633265584]
 stream = ExtResource("3_3rx3m")
