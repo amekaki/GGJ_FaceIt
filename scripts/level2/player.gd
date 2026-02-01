@@ -7,6 +7,7 @@ var health = MAX_HEALTH
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var light: AnimatedSprite2D = $light
 #@onready var ray_cast_up: RayCast2D = $RayCastUp
 #@onready var ray_cast_right: RayCast2D = $RayCastRight
 #@onready var ray_cast_down: RayCast2D = $RayCastDown
@@ -19,8 +20,11 @@ func _ready() -> void:
 
 
 var fixPosition = false
+var hurt = false
 
 func _physics_process(delta: float) -> void:
+	if hurt:
+		return
 	#if ray_cast_up.is_colliding():
 		#return
 	#if ray_cast_right.is_colliding():
@@ -35,22 +39,25 @@ func _physics_process(delta: float) -> void:
 	var isAxisY = abs(yDirection) > abs(xDirection)
 	
 	if xDirection != 0 or yDirection != 0:
-		animated_sprite.play("right")
+		animated_sprite.play("right-2")
 	else:
-		animated_sprite.play("idle")
+		animated_sprite.play("idle2")
 	
 	if xDirection > 0:
 		animated_sprite.flip_h = true
-		#if fixPosition == true:
-			#fixPosition = false
-			#collision_shape_2d.position.x = 0
-			#collision_shape_2d.position.x = collision_shape_2d.position.x + 6.6
+		light.flip_h = true
+		if fixPosition == true:
+			fixPosition = false
+			light.position.x = 8.0
+			
 	elif xDirection < 0:
-		#if fixPosition == false:
-			#fixPosition = true
-			#animated_sprite.position.x = animated_sprite.position.x - 6.6
-			#collision_shape_2d.position.x = 14
+		if fixPosition == false:
+			fixPosition = true
+			light.position.x = -8.0
+			
 		animated_sprite.flip_h = false
+		light.flip_h = false
+		
 
 	
 	if xDirection:
@@ -70,16 +77,20 @@ func _physics_process(delta: float) -> void:
 
 
 func take_damage(damage: int) -> void:
+	hurt = true
 	health -= damage
+	
+	animated_sprite.play("hurt")
 	print("Player 受到伤害: ", damage, " | 剩余生命值: ", health)
 	
 	# 可以添加受伤动画或效果
 	# animated_sprite.modulate = Color.RED
-	# await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.2).timeout
 	# animated_sprite.modulate = Color.WHITE
 	
 	if health <= 0:
 		die()
+	hurt = false
 
 
 func die() -> void:
