@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://j4vrrgeg025t"]
+
+[ext_resource type="Script" uid="uid://mxlkqp3qrjw3" path="res://scripts/level2/player.gd" id="1_j6ogk"]
+[ext_resource type="Texture2D" uid="uid://baxu6jtimfok1" path="res://assets/maze/player2.png" id="3_gtrjy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2t2b"]
+atlas = ExtResource("3_gtrjy")
+region = Rect2(453, 0, 453, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6ogk"]
+atlas = ExtResource("3_gtrjy")
+region = Rect2(0, 0, 453, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_queen"]
+atlas = ExtResource("3_gtrjy")
+region = Rect2(453, 0, 453, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_po4fp"]
+atlas = ExtResource("3_gtrjy")
+region = Rect2(0, 425, 453, 425)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjtid"]
+atlas = ExtResource("3_gtrjy")
+region = Rect2(453, 425, 453, 425)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j6ogk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2t2b")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6ogk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_queen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_po4fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjtid")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e2t2b"]
+radius = 8.0
+height = 18.666668
+
+[node name="Player" type="CharacterBody2D" unique_id=492075485]
+z_index = 5
+scale = Vector2(6, 6)
+script = ExtResource("1_j6ogk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1593685051]
+position = Vector2(6.6, -5)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_j6ogk")
+animation = &"right"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=276757574]
+shape = SubResource("CapsuleShape2D_e2t2b")

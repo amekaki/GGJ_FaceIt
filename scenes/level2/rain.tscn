@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://dqygvvi15igyb"]
+
+[ext_resource type="Script" uid="uid://dg0nf5g6n8doc" path="res://scripts/level2/rain.gd" id="2_3rx3m"]
+[ext_resource type="Texture2D" uid="uid://74ru3i8b87n1" path="res://assets/test/world_tileset.png" id="2_e6kek"]
+[ext_resource type="AudioStream" uid="uid://cxcdjl6rgypq6" path="res://assets/maze/hurt.wav" id="3_3rx3m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcxrv"]
+atlas = ExtResource("2_e6kek")
+region = Rect2(80, 96, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e6kek"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcxrv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6kek"]
+size = Vector2(48, 64)
+
+[sub_resource type="Animation" id="Animation_i2ly5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Rain:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_wb0rb"]
+resource_name = "hurt"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Rain:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n4qnf"]
+_data = {
+&"RESET": SubResource("Animation_i2ly5"),
+&"hurt": SubResource("Animation_wb0rb")
+}
+
+[node name="Rain" type="Area2D" unique_id=1027638553]
+z_index = 5
+script = ExtResource("2_3rx3m")
+
+[node name="Rain" type="AnimatedSprite2D" parent="." unique_id=1914641965]
+scale = Vector2(3, 4)
+sprite_frames = SubResource("SpriteFrames_e6kek")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=370396952]
+shape = SubResource("RectangleShape2D_e6kek")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1633265584]
+stream = ExtResource("3_3rx3m")
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1700027691]
+root_node = NodePath("../AudioStreamPlayer2D")
+libraries/ = SubResource("AnimationLibrary_n4qnf")
