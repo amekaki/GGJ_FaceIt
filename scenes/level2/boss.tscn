@@ -114,6 +114,7 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="BossRain" type="AnimatedSprite2D" parent="." unique_id=1593685051]
+visible = false
 sprite_frames = SubResource("SpriteFrames_j6ogk")
 animation = &"idle"
 autoplay = "idle"
