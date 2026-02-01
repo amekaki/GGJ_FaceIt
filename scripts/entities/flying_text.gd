@@ -95,13 +95,13 @@ func init_attack(spawn_pos: Vector2, attack_word: String = "", counter_word: Str
 	# 确保RichTextLabel能够适应内容大小，避免文字被裁剪
 	rich_label.fit_content = true
 	# 根据文字长度动态调整SubViewport大小，确保文字完整显示
-	# 字体大小为70，每个中文字符大约需要70像素宽度
+	# 字体大小为50，每个中文字符大约需要55像素宽度
 	# 考虑动效（tornado radius=15, shake level=4）会增加显示区域，需要额外空间
 	var char_count: int = _word.length()
-	var base_width: int = max(140, char_count * 80)  # 每个字符约80像素宽度（含动效）
-	var base_height: int = 120  # 高度固定，足够显示单行文字和动效
+	var base_width: int = max(100, char_count * 60)  # 每个字符约60像素宽度（含动效）
+	var base_height: int = 90  # 高度固定，足够显示单行文字和动效
 	# 添加额外的边距以容纳动效效果
-	var margin: int = 40  # 左右各20像素边距
+	var margin: int = 30  # 左右各15像素边距
 	viewport.size = Vector2i(base_width + margin * 2, base_height)
 	scale = Vector2(0.4, 0.4)
 	modulate = Color(1, 1, 1, 0)

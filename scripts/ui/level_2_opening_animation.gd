@@ -10,9 +10,8 @@ extends Control
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
-	"res://assets/sprites/start/opening/1.png",
-	"res://assets/sprites/start/opening/2.png",
-	"res://assets/sprites/start/opening/3.png"
+	"res://assets/sprites/level_2/opening/1.png",
+	"res://assets/sprites/level_2/opening/2.png"
 ]
 # 文字配置（与图片路径一一对应，如果为空字符串则不显示）
 var text_configs: Array[String] = [
@@ -21,8 +20,8 @@ var text_configs: Array[String] = [
 	""
 ]
 var current_index: int = 0
-
-const SCENE_LEVEL_2: String = "res://scenes/levels/level_2.tscn"
+# D:\files\games\demo\scenes\level2\maze.tscn
+const SCENE_LEVEL_2: String = "res://scenes/level2/maze.tscn"
 const SCENE_LOADING: String = "res://scenes/ui/loading_screen.tscn"
 
 @onready var _scene_manager: Node = get_node("/root/SceneManager")
