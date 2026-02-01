@@ -33,6 +33,14 @@ func _update_display() -> void:
 		if texture:
 			current_image.texture = texture
 	
+	# 更新文字显示
+	if text_label:
+		if current_index < text_configs.size() and text_configs[current_index] != "":
+			text_label.text = text_configs[current_index]
+			text_label.visible = true
+		else:
+			text_label.visible = false
+	
 	# 更新箭头显示
 	left_arrow.visible = current_index > 0
 	right_arrow.visible = current_index < image_paths.size() - 1

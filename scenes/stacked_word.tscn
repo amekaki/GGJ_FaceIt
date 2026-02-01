@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ckx0vnfnc4y53"]
 
 [ext_resource type="Script" path="res://scripts/game/stacked_word.gd" id="1_script"]
-[ext_resource type="FontFile" uid="uid://fse5jeeww8v7" path="res://assets/fonts/YanXingXiangSu.ttf" id="2_font"]
+[ext_resource type="FontFile" path="res://assets/fonts/AaSiHaSiHaShouXieTi-2.ttf" id="2_font"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_transparent"]
 

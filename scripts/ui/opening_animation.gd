@@ -6,12 +6,19 @@ extends Control
 @onready var left_arrow: Button = $LeftArrow
 @onready var right_arrow: Button = $RightArrow
 @onready var start_button: Button = $StartButton
+@onready var text_label: Label = $TextLabel
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
 	"res://assets/sprites/start/opening/1.png",
 	"res://assets/sprites/start/opening/2.png",
 	"res://assets/sprites/start/opening/3.png"
+]
+# 文字配置（与图片路径一一对应，如果为空字符串则不显示）
+var text_configs: Array[String] = [
+	"开场动画，啦啦啦啦啦",
+	"第二个画面",
+	""
 ]
 var current_index: int = 0
 
@@ -32,6 +39,15 @@ func _update_display() -> void:
 		var texture: Texture2D = load(image_paths[current_index]) as Texture2D
 		if texture:
 			current_image.texture = texture
+			print("current_image.texture: ", current_image.texture)
+	# 更新文字显示
+	if text_label:
+		if current_index < text_configs.size() and text_configs[current_index] != "":
+			text_label.text = text_configs[current_index]
+			text_label.visible = true
+			print("text_label.text: ", text_label.text)
+		else:
+			text_label.visible = false
 	
 	# 更新箭头显示
 	left_arrow.visible = current_index > 0

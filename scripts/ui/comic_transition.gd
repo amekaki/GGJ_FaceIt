@@ -5,12 +5,19 @@ extends Control
 @onready var current_image: TextureRect = $ImageContainer/CurrentImage
 @onready var next_image: TextureRect = $ImageContainer/NextImage
 @onready var next_button: Button = $NextButton
+@onready var text_label: Label = $TextLabel
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
 	"res://assets/sprites/level_1/ending/1.png",
 	"res://assets/sprites/level_1/ending/2.png",
 	"res://assets/sprites/level_1/ending/3.png"
+]
+# 文字配置（与图片路径一一对应，如果为空字符串则不显示）
+var text_configs: Array[String] = [
+	"",
+	"",
+	""
 ]
 var current_index: int = 0
 var display_timer: Timer
@@ -75,6 +82,10 @@ func _transition_to_next() -> void:
 	# 将下一张图片设置到next_image
 	next_image.texture = texture
 	next_image.modulate.a = 0.0
+	# 更新下一张图片的文字
+	var next_text: String = ""
+	if current_index < text_configs.size():
+		next_text = text_configs[current_index]
 	# 创建切换动画：当前图片淡出，下一张图片淡入
 	if transition_tween:
 		transition_tween.kill()
@@ -84,6 +95,16 @@ func _transition_to_next() -> void:
 	transition_tween.tween_property(current_image, "modulate:a", 0.0, TRANSITION_DURATION)
 	# 下一张图片淡入
 	transition_tween.tween_property(next_image, "modulate:a", 1.0, TRANSITION_DURATION)
+	# 文字淡出淡入
+	if text_label:
+		if next_text != "":
+			text_label.text = next_text
+			text_label.visible = true
+			text_label.modulate.a = 0.0
+			transition_tween.tween_property(text_label, "modulate:a", 1.0, TRANSITION_DURATION)
+		else:
+			transition_tween.tween_property(text_label, "modulate:a", 0.0, TRANSITION_DURATION)
+			transition_tween.tween_callback(func(): text_label.visible = false).set_delay(TRANSITION_DURATION)
 	# 动画完成后交换图片
 	transition_tween.tween_callback(_swap_images).set_delay(TRANSITION_DURATION)
 

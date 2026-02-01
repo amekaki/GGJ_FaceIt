@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://level2_01"]
+[gd_scene load_steps=3 format=3 uid="uid://level2_01"]
 
 [ext_resource type="Script" path="res://scripts/game/level_2.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://assets/fonts/AaSiHaSiHaShouXieTi-2.ttf" id="2_font"]
 
 [node name="Level2" type="Control"]
 layout_mode = 3
@@ -26,12 +27,16 @@ alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 80
 text = "第二关"
 horizontal_alignment = 1
 
 [node name="BtnPass" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 60
 text = "通过本关"
 
 [node name="ExitButton" type="Button" parent="."]
@@ -45,4 +50,6 @@ offset_left = -120.0
 offset_top = -50.0
 offset_right = -20.0
 offset_bottom = -20.0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 40
 text = "退出游戏"

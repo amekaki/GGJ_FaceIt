@@ -99,11 +99,15 @@ theme_override_constants/separation = 16
 
 [node name="ResultLabel" type="Label" parent="ResultPanel/VBoxContainer" unique_id=1901844182]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 60
 text = "胜利！"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="ResultPanel/VBoxContainer" unique_id=242501320]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 50
 text = "重新开始"
 
 [node name="ExitButton" type="Button" parent="." unique_id=26513674]
@@ -116,4 +120,6 @@ offset_left = -120.0
 offset_top = -50.0
 offset_right = -20.0
 offset_bottom = -20.0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 40
 text = "退出游戏"

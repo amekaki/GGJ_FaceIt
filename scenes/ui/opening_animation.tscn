@@ -1,42 +1,71 @@
-[gd_scene load_steps=2 format=3 uid="uid://opening_animation01"]
+[gd_scene format=3 uid="uid://c68m3cwpq7o1n"]
 
-[ext_resource type="Script" path="res://scripts/ui/opening_animation.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bfamua3e5dj6k" path="res://scripts/ui/opening_animation.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://cq3wcesnmbqx5" path="res://assets/fonts/AaSiHaSiHaShouXieTi-2.ttf" id="2_font"]
 
-[node name="OpeningAnimation" type="Control"]
+[node name="OpeningAnimation" type="Control" unique_id=493842274]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="ImageContainer" type="Control" parent="."]
+[node name="TextLabel" type="Label" parent="." unique_id=207408069]
+visible = false
+z_index = 1
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 80
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+text = "你好你好"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CurrentImage" type="TextureRect" parent="ImageContainer"]
+[node name="ImageContainer" type="Control" parent="." unique_id=1681095683]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentImage" type="TextureRect" parent="ImageContainer" unique_id=354336007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LeftArrow" type="Button" parent="."]
+[node name="LeftArrow" type="Button" parent="." unique_id=1661872776]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 0.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.0
 anchor_bottom = 1.0
 offset_left = 20.0
 offset_top = -100.0
 offset_right = 120.0
 offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 60
 text = "<"
 
-[node name="RightArrow" type="Button" parent="."]
+[node name="RightArrow" type="Button" parent="." unique_id=2113096299]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -47,9 +76,14 @@ offset_left = -120.0
 offset_top = -100.0
 offset_right = -20.0
 offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 60
 text = ">"
 
-[node name="StartButton" type="Button" parent="."]
+[node name="StartButton" type="Button" parent="." unique_id=1579804500]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -60,5 +94,8 @@ offset_left = -200.0
 offset_top = -100.0
 offset_right = -20.0
 offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 60
 text = "开始游戏"
-visible = false

@@ -10,6 +10,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_script")
 
+[node name="TextLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -400.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 150.0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 80
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+horizontal_alignment = 1
+vertical_alignment = 1
+text = ""
+visible = false
+
 [node name="ImageContainer" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
