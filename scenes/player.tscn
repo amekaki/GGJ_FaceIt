@@ -138,6 +138,11 @@ animations = [{
 "loop": true,
 "name": &"IDEL",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"V2",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D"]
@@ -148,9 +153,9 @@ script = ExtResource("1_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=636617355]
 position = Vector2(3.1220183, -0.9467783)
-scale = Vector2(7.702665, 7.137788)
+scale = Vector2(7.683, 7.119)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"DAMAGE"
+animation = &"IDEL"
 
 [node name="DeflectZone" type="Area2D" parent="." unique_id=2021259656 groups=["player_deflect_zone"]]
 position = Vector2(28, 1)

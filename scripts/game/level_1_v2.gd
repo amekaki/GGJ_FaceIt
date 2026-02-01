@@ -163,6 +163,8 @@ func _update_waves_by_hp() -> void:
 		waves = normal_waves
 	# 如果当前wave_index超出范围，重置为0（循环读取）
 	if current_wave_index >= waves.size() and waves.size() > 0:
+		print("current_wave_index: ", current_wave_index)
+		print("waves.size(): ", waves.size())
 		current_wave_index = 0
 
 func _start_wave() -> void:
@@ -389,6 +391,7 @@ func _advance_wave(_success: bool) -> void:
 	print("interval: ", interval)
 	print("wave_start_beat: ", wave_start_beat)
 	# 如果超出范围，循环到第一个
+	current_wave_index += 1
 	if current_wave_index >= waves.size() and waves.size() > 0:
 		current_wave_index = 0
 	# 如果wave_start_beat还没有被设置（比如在生成反击文字时已经设置过了），则使用当前beat_index加上当前wave的interval

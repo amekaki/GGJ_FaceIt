@@ -7,26 +7,34 @@
 			"get_ready_time": 2.0,
 			"attack_wait_time": 2.0,
 			"attack_words": [
-				"你好",
-				"笨蛋"
+					"笨蛋",
+					"啊",
+					"啊",
+					"啊",
+					"啊",
+					"啊",
+					"啊"
 			],
 			"counterattack_words": [
 				"你",
 				"才",
 				"笨"
 			],
-			"pitch_config": ["do", "si2", "si2"],
+			"pitch_config": ["do", "re", "mi","mi","re","so","si"],
 			"damage_value": [
+				10,
+				10,
+				10,
+				10,
 				10,
 				10,
 				10
 			],
 			"beat_config": [
-				0.0,
-				2.0
+				0,1,2,4,5,6,8
 			],
-			"travel_beats": 8,
-			"interval_time": 24,
+			"travel_beats": 12,
+			"interval_time": 32,
 			"attack_sentence": "你才是！！！",
 			"sentence_damage_value":10
 		},
