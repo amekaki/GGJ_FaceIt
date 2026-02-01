@@ -9,10 +9,9 @@ extends Control
 
 # 图片路径配置（可以通过配置文件扩展）
 var image_paths: Array[String] = [
-	"res://assets/sprites/background.png",
-	"res://assets/sprites/background.png",
-	"res://assets/sprites/background.png",
-	"res://assets/sprites/background.png"
+	"res://assets/sprites/start/opening/1.png",
+	"res://assets/sprites/start/opening/2.png",
+	"res://assets/sprites/start/opening/3.png"
 ]
 var current_index: int = 0
 

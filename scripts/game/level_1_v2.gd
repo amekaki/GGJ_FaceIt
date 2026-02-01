@@ -12,6 +12,7 @@ extends Node
 @onready var wave_warning_label: Label = $WaveWarningLabel
 @onready var _config: Node = get_node("/root/GameConfig")
 @onready var _save: Node = get_node("/root/SaveManager")
+@onready var _music_manager: Node = get_node("/root/MusicManager")
 
 var level_data: Dictionary = {}
 var normal_waves: Array = []
@@ -76,6 +77,9 @@ const FLOATING_TEXT_SCENE := preload("res://scenes/ui/floating_text.tscn")
 const FLOATING_TEXT_DURATION: float = 1  # 浮动文字持续时间（可配置）
 
 func _ready() -> void:
+	# 停止开始音乐，开始关卡音乐
+	if _music_manager and _music_manager.has_method("stop_start_music"):
+		_music_manager.stop_start_music()
 	_save.save_level(1)
 	_load_level()
 	_apply_layout()

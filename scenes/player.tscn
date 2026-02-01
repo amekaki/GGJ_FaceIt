@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://drwxhac3mblnx" path="res://assets/sprites/player/v2/受击/Shouting.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://ntdig2bla7cj" path="res://assets/test/player/正常跳.png" id="3_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="4_fjrip"]
+[ext_resource type="Texture2D" uid="uid://d2kme37u6lf5o" path="res://assets/sprites/player/v2/静止/静止.png" id="6_fjrip"]
 [ext_resource type="Texture2D" uid="uid://twjsc782lbti" path="res://assets/sprites/player/v2/打击/打击.png" id="6_tuyoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
@@ -47,12 +48,12 @@ atlas = ExtResource("4_fjrip")
 region = Rect2(48, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
-atlas = ExtResource("6_tuyoq")
-region = Rect2(590, 0, 590, 425)
+atlas = ExtResource("6_fjrip")
+region = Rect2(0, 0, 591, 443)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a38lo"]
-atlas = ExtResource("6_tuyoq")
-region = Rect2(0, 425, 590, 425)
+[sub_resource type="AtlasTexture" id="AtlasTexture_oprun"]
+atlas = ExtResource("6_fjrip")
+region = Rect2(0, 443, 591, 443)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
 animations = [{
@@ -111,7 +112,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_y4r1p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a38lo")
+"texture": SubResource("AtlasTexture_oprun")
 }],
 "loop": true,
 "name": &"IDEL",
@@ -134,7 +135,7 @@ script = ExtResource("1_script")
 position = Vector2(3.1220183, -0.9467783)
 scale = Vector2(0.563, 0.522)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"DAMAGE"
+animation = &"IDEL"
 
 [node name="DeflectZone" type="Area2D" parent="." unique_id=2021259656 groups=["player_deflect_zone"]]
 position = Vector2(28, 1)

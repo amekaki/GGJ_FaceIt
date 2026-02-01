@@ -41,8 +41,8 @@ animation = &"new_animation"
 position = Vector2(-6, 5)
 
 [node name="Player" parent="GamePlay" unique_id=2018370808 instance=ExtResource("2_player")]
-position = Vector2(1457, 973)
-scale = Vector2(2.145, 2.145)
+position = Vector2(1645, 1061)
+scale = Vector2(1.73, 1.73)
 
 [node name="Enemy" parent="GamePlay" unique_id=585012845 instance=ExtResource("3_enemy")]
 position = Vector2(220, 976)
