@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://bxkvjg5ntofer"]
+
+[ext_resource type="Texture2D" uid="uid://74ru3i8b87n1" path="res://assets/test/world_tileset.png" id="2_8jup5"]
+[ext_resource type="Script" uid="uid://byj2c2ayl2qgf" path="res://scripts/level2/boss_rain.gd" id="3_moxoi"]
+[ext_resource type="Texture2D" uid="uid://c1bpd8cd862f7" path="res://assets/test/player/正常爬.png" id="3_wbmma"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jup5"]
+atlas = ExtResource("3_wbmma")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_moxoi"]
+atlas = ExtResource("3_wbmma")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ph0ob"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8jup5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_moxoi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rx3m"]
+atlas = ExtResource("2_8jup5")
+region = Rect2(0, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2ly5"]
+atlas = ExtResource("2_8jup5")
+region = Rect2(0, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbmma"]
+atlas = ExtResource("2_8jup5")
+region = Rect2(16, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy4g5"]
+atlas = ExtResource("2_8jup5")
+region = Rect2(16, 128, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j6ogk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rx3m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2ly5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbmma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy4g5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_e6kek"]
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BossRain:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="Animation" id="Animation_3rx3m"]
+resource_name = "rotate"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BossRain:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.6283185307179586, 1.2566370614359172, 1.884955592153876, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i2ly5"]
+_data = {
+&"RESET": SubResource("Animation_e6kek"),
+&"rotate": SubResource("Animation_3rx3m")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ph0ob"]
+size = Vector2(15.999999, 16)
+
+[node name="Boss" type="Node2D" unique_id=1155383904]
+scale = Vector2(6, 6)
+
+[node name="BossFake" type="AnimatedSprite2D" parent="." unique_id=783487160]
+sprite_frames = SubResource("SpriteFrames_ph0ob")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="BossRain" type="AnimatedSprite2D" parent="." unique_id=1593685051]
+sprite_frames = SubResource("SpriteFrames_j6ogk")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.23020169
+script = ExtResource("3_moxoi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=22244977]
+libraries/ = SubResource("AnimationLibrary_i2ly5")
+autoplay = &"RESET"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1447531739]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2056045688]
+position = Vector2(-1.5894572e-07, 0)
+shape = SubResource("RectangleShape2D_ph0ob")

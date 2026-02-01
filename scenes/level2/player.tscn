@@ -61,6 +61,7 @@ animations = [{
 size = Vector2(16, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=492075485]
+z_index = 5
 scale = Vector2(6, 6)
 script = ExtResource("1_j6ogk")
 
@@ -72,3 +73,15 @@ animation = &"right"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=276757574]
 position = Vector2(2.3841858e-07, 2.3841858e-07)
 shape = SubResource("RectangleShape2D_po4fp")
+
+[node name="RayCastUp" type="RayCast2D" parent="." unique_id=2062190075]
+target_position = Vector2(0, -10.666667)
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=425601382]
+target_position = Vector2(10.666667, 0)
+
+[node name="RayCastDown" type="RayCast2D" parent="." unique_id=498540674]
+target_position = Vector2(-10.666667, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=732968495]
+target_position = Vector2(0, 10.666667)

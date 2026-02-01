@@ -1,18 +1,20 @@
 [gd_scene format=4 uid="uid://cnt2l8fovd5yv"]
 
 [ext_resource type="PackedScene" uid="uid://j4vrrgeg025t" path="res://scenes/level2/player.tscn" id="1_7dqhs"]
+[ext_resource type="Texture2D" uid="uid://diyhxljf5eeka" path="res://assets/maze/bg.png" id="1_yhfo3"]
 [ext_resource type="Texture2D" uid="uid://74ru3i8b87n1" path="res://assets/test/world_tileset.png" id="2_2likh"]
 [ext_resource type="Texture2D" uid="uid://c5stwyxd1wr5y" path="res://assets/maze/wall.png" id="3_el537"]
+[ext_resource type="PackedScene" uid="uid://bxkvjg5ntofer" path="res://scenes/level2/boss.tscn" id="5_yhfo3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_el537"]
-atlas = ExtResource("3_el537")
-region = Rect2(21, 0, 3, 3)
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb3qs"]
+atlas = ExtResource("1_yhfo3")
+region = Rect2(0, 0, 1200, 896)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o85ck"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_el537")
+"texture": SubResource("AtlasTexture_gb3qs")
 }],
 "loop": false,
 "name": &"default",
@@ -219,21 +221,22 @@ metadata/_snap_count = 12
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_o85ck"]
 gradient = SubResource("Gradient_el537")
-width = 96
-height = 96
+width = 192
+height = 192
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 1)
+fill_to = Vector2(0.9, 0.9)
 
 [node name="Maze" type="Node2D" unique_id=1423120443]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1998129968]
-position = Vector2(1095.625, 1133.625)
-scale = Vector2(933.5833, 908.25006)
+position = Vector2(1152, 1160)
+scale = Vector2(2.892857, 2.892857)
 sprite_frames = SubResource("SpriteFrames_o85ck")
 frame_progress = 1.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1345821744]
+visible = false
 z_index = 2
 color = Color(0, 0, 0, 1)
 
@@ -258,5 +261,9 @@ limit_bottom = 2400
 position_smoothing_enabled = true
 
 [node name="Vision" type="PointLight2D" parent="Y Sort/Player" unique_id=1190644864]
+visible = false
 scale = Vector2(1.6875, 1.59375)
 texture = SubResource("GradientTexture2D_o85ck")
+
+[node name="Boss" parent="." unique_id=2006105907 instance=ExtResource("5_yhfo3")]
+position = Vector2(1152, 1152)

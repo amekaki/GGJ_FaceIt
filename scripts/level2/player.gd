@@ -2,9 +2,21 @@ extends CharacterBody2D
 
 const SPEED = 350
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+#@onready var ray_cast_up: RayCast2D = $RayCastUp
+#@onready var ray_cast_right: RayCast2D = $RayCastRight
+#@onready var ray_cast_down: RayCast2D = $RayCastDown
+#@onready var ray_cast_left: RayCast2D = $RayCastLeft
 
 
 func _physics_process(delta: float) -> void:
+	#if ray_cast_up.is_colliding():
+		#return
+	#if ray_cast_right.is_colliding():
+		#return
+	#if ray_cast_down.is_colliding():
+		#return
+	#if ray_cast_left.is_colliding():
+		#return
 	var xDirection := Input.get_axis("left", "right")
 	var yDirection := Input.get_axis("up", "down")
 	
