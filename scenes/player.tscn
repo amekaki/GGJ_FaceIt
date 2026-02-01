@@ -92,7 +92,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d2wvv")
 }],
-"loop": false,
+"loop": true,
 "name": &"DEAD",
 "speed": 5.0
 }, {
@@ -135,7 +135,7 @@ script = ExtResource("1_script")
 position = Vector2(3.1220183, -0.9467783)
 scale = Vector2(0.563, 0.522)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"IDEL"
+animation = &"DEAD"
 
 [node name="DeflectZone" type="Area2D" parent="." unique_id=2021259656 groups=["player_deflect_zone"]]
 position = Vector2(28, 1)

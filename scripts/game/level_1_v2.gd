@@ -10,6 +10,10 @@ extends Node
 @onready var tap_sound: AudioStreamPlayer = $TapSound
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 @onready var wave_warning_label: Label = $WaveWarningLabel
+
+# 音效播放器（动态创建）
+var miss_sound_player: AudioStreamPlayer
+var boom_sound_player: AudioStreamPlayer
 @onready var _config: Node = get_node("/root/GameConfig")
 @onready var _save: Node = get_node("/root/SaveManager")
 @onready var _music_manager: Node = get_node("/root/MusicManager")
@@ -71,6 +75,7 @@ const PITCH_SCALES: Dictionary = {
 
 const FLYING_TEXT_SCENE := preload("res://scenes/flying_text.tscn")
 const POPUP_LEVEL_SCENE := preload("res://scenes/ui/popup_level.tscn")
+const SCENE_COMIC_TRANSITION: String = "res://scenes/ui/comic_transition.tscn"
 const SCENE_LEVEL_2: String = "res://scenes/levels/level_2.tscn"
 const FLOATING_TEXT_SCENE := preload("res://scenes/ui/floating_text.tscn")
 
@@ -80,6 +85,14 @@ func _ready() -> void:
 	# 停止开始音乐，开始关卡音乐
 	if _music_manager and _music_manager.has_method("stop_start_music"):
 		_music_manager.stop_start_music()
+	# 创建音效播放器
+	miss_sound_player = AudioStreamPlayer.new()
+	miss_sound_player.stream = load("res://assets/music/miss.mp3") as AudioStream
+	add_child(miss_sound_player)
+	boom_sound_player = AudioStreamPlayer.new()
+	boom_sound_player.stream = load("res://assets/music/power_up.wav") as AudioStream
+	boom_sound_player.volume_db = -10.0  # 降低音量
+	add_child(boom_sound_player)
 	_save.save_level(1)
 	_load_level()
 	_apply_layout()
@@ -468,6 +481,9 @@ func _on_flying_text_deflected(_ft: Node) -> void:
 func _on_flying_text_missed(ft: Node) -> void:
 	if ft and ft.has_method("get_damage"):
 		pass
+	# 播放miss音效
+	if miss_sound_player and miss_sound_player.stream:
+		miss_sound_player.play()
 	# 显示MISS文字（在玩家上方）
 	_show_floating_text("MISS", player.global_position + Vector2(0, -80), Color(245, 51, 82), 60, FLOATING_TEXT_DURATION, true)
 	_flying_count -= 1
@@ -479,6 +495,9 @@ func _on_flying_text_hit_enemy(_ft: Node) -> void:
 
 func _on_counter_sentence_hit_enemy(_ft: Node) -> void:
 	enemy.play_damage()
+	# 播放boom音效
+	if boom_sound_player and boom_sound_player.stream:
+		boom_sound_player.play()
 	# 显示"怪物受伤"文字（在敌人上方）
 	_show_floating_text("啊呜", enemy.global_position + Vector2(0, -200), Color(1, 0.2, 0.2), 60, FLOATING_TEXT_DURATION, true)
 	# 敌人受伤后，检查是否需要切换阶段
@@ -546,21 +565,21 @@ func _show_level_complete_text() -> void:
 	complete_label.offset_bottom = 0
 	complete_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	complete_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	complete_label.text = "Level1通关"
+	complete_label.text = "成功！"
 	# 使用与WaveWarningLabel相同的字体
 	if wave_warning_label:
 		var font = wave_warning_label.get_theme_font("font")
 		if font:
 			complete_label.add_theme_font_override("font", font)
-	complete_label.add_theme_font_size_override("font_size", 100)
-	complete_label.add_theme_color_override("font_color", Color(1, 1, 0.2, 1))
-	complete_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
-	complete_label.add_theme_constant_override("outline_size", 8)
-	complete_layer.add_child(complete_label)
+	# complete_label.add_theme_font_size_override("font_size", 100)
+	# complete_label.add_theme_color_override("font_color", Color(1, 1, 0.2, 1))
+	# complete_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	# complete_label.add_theme_constant_override("outline_size", 8)
+	# complete_layer.add_child(complete_label)
 	
 	# 2秒后显示弹窗
 	var timer: Timer = Timer.new()
-	timer.wait_time = 5.0
+	timer.wait_time = 1
 	timer.one_shot = true
 	timer.timeout.connect(func(): _on_complete_text_finished(complete_layer))
 	add_child(timer)
@@ -580,11 +599,15 @@ func _finish_game(victory: bool) -> void:
 	var popup: CanvasLayer = POPUP_LEVEL_SCENE.instantiate()
 	add_child(popup)
 	if victory:
-		popup.show_popup("胜利", "进入下一关")
-		popup.pressed.connect(_go_next_level)
+		popup.show_popup("成功打败玛丽斯", "摘下面具")
+		popup.pressed.connect(_go_to_comic_transition)
 	else:
 		popup.show_popup("失败", "重新开始本关")
 		popup.pressed.connect(_restart_level)
+
+func _go_to_comic_transition() -> void:
+	# 进入漫画切换场景
+	get_tree().change_scene_to_file(SCENE_COMIC_TRANSITION)
 
 func _go_next_level() -> void:
 	_save.save_level(2)

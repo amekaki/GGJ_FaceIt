@@ -32,8 +32,8 @@ position = Vector2(1024, 768)
 
 [node name="Background" type="AnimatedSprite2D" parent="." unique_id=1166547004]
 z_index = -1
-position = Vector2(940.64, 702.8288)
-scale = Vector2(1.8528125, 1.8060882)
+position = Vector2(1033.6638, 760.47815)
+scale = Vector2(1.6977729, 1.6774065)
 sprite_frames = SubResource("SpriteFrames_s8va5")
 animation = &"new_animation"
 
@@ -51,10 +51,11 @@ position = Vector2(220, 976)
 
 [node name="TapSound" type="AudioStreamPlayer" parent="." unique_id=1922226908]
 stream = ExtResource("6_sb0na")
-volume_db = -20.0
+volume_db = -5.0
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=1577907011]
 stream = ExtResource("6_music")
+volume_db = 10.357
 
 [node name="BeatTimer" type="Timer" parent="." unique_id=183387542]
 wait_time = 0.5

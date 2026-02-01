@@ -50,6 +50,6 @@ animations = [{
 script = ExtResource("1_script")
 
 [node name="boom" type="AnimatedSprite2D" parent="." unique_id=142113200]
-scale = Vector2(3, 3)
+scale = Vector2(7.29, 7.29)
 sprite_frames = SubResource("SpriteFrames_boom")
 animation = &"boom"

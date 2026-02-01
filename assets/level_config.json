@@ -36,7 +36,7 @@
 			"travel_beats": 12,
 			"interval_time": 32,
 			"attack_sentence": "你才是！！！",
-			"sentence_damage_value":60
+			"sentence_damage_value":100
 		},
 		{
 			"get_ready_time": 2.0,

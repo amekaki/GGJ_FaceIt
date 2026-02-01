@@ -27,26 +27,44 @@ func _ready() -> void:
 	play_idle()
 
 func take_damage(amount: int) -> void:
+	# 如果已经死亡，不再处理伤害
+	if current_hp <= 0:
+		return
 	current_hp = clampi(current_hp - amount, 0, max_hp)
 	hp_changed.emit(current_hp, max_hp)
-	play_damage()
 	if current_hp <= 0:
+		# 死亡时直接播放死亡动画，不播放受伤动画
 		play_dead()
 		died.emit()
+	else:
+		# 未死亡时播放受伤动画
+		play_damage()
 
 func play_idle() -> void:
+	# 如果已经死亡，不再播放其他动画
+	if current_hp <= 0:
+		return
 	if anim.sprite_frames.has_animation(ANIM_IDLE):
 		anim.play(ANIM_IDLE)
 
 func play_attack() -> void:
+	# 如果已经死亡，不再播放其他动画
+	if current_hp <= 0:
+		return
 	if anim.sprite_frames.has_animation(ANIM_ATTACK):
 		anim.play(ANIM_ATTACK)
 
 func play_damage() -> void:
+	# 如果已经死亡，不再播放其他动画
+	if current_hp <= 0:
+		return
 	if anim.sprite_frames.has_animation(ANIM_DAMAGE):
 		anim.play(ANIM_DAMAGE)
 
 func play_happy() -> void:
+	# 如果已经死亡，不再播放其他动画
+	if current_hp <= 0:
+		return
 	_skip_next_idle = true
 	if anim.sprite_frames.has_animation(ANIM_HAPPY):
 		anim.play(ANIM_HAPPY)
@@ -62,6 +80,9 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		take_damage(area.get_damage())
 
 func _on_anim_finished() -> void:
+	# 如果已经死亡，不再切换动画
+	if current_hp <= 0:
+		return
 	if _skip_next_idle:
 		_skip_next_idle = false
 		return
