@@ -33,10 +33,6 @@ func _process(delta: float) -> void:
 func spawn_rain() -> void:
 	var rain_instance: Node2D = RAIN.instantiate()
 	
-	# 根据当前旋转角度计算 rain 的生成位置
-	var spawn_angle = rotation
-	var spawn_offset = Vector2(cos(spawn_angle), sin(spawn_angle)) * RAIN_DISTANCE
-	
 	rain_instance.rotation = rotation
 	rain_instance.scale.x = 0.1
 	rain_instance.scale.y = 0.1

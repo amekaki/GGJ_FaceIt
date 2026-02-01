@@ -1,11 +1,20 @@
 extends CharacterBody2D
 
 const SPEED = 350
+const MAX_HEALTH = 100
+
+var health = MAX_HEALTH
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 #@onready var ray_cast_up: RayCast2D = $RayCastUp
 #@onready var ray_cast_right: RayCast2D = $RayCastRight
 #@onready var ray_cast_down: RayCast2D = $RayCastDown
 #@onready var ray_cast_left: RayCast2D = $RayCastLeft
+
+
+func _ready() -> void:
+	# 将 player 添加到 "player" 组，方便识别
+	add_to_group("player")
 
 
 func _physics_process(delta: float) -> void:
@@ -48,3 +57,23 @@ func _physics_process(delta: float) -> void:
 		velocity.y = move_toward(velocity.y, 0, SPEED)
 
 	move_and_slide()
+
+
+func take_damage(damage: int) -> void:
+	health -= damage
+	print("Player 受到伤害: ", damage, " | 剩余生命值: ", health)
+	
+	# 可以添加受伤动画或效果
+	# animated_sprite.modulate = Color.RED
+	# await get_tree().create_timer(0.1).timeout
+	# animated_sprite.modulate = Color.WHITE
+	
+	if health <= 0:
+		die()
+
+
+func die() -> void:
+	print("Player 死亡!")
+	# 这里可以添加死亡逻辑，比如重新开始关卡
+	# queue_free()
+	# get_tree().reload_current_scene()
