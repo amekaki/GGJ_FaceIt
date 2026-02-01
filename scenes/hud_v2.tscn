@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://ftrjjmirhj05"]
+
+[ext_resource type="Script" uid="uid://l71vywgftx2w" path="res://scripts/level2/hud_v_2.gd" id="1_u7wp6"]
+[ext_resource type="FontFile" uid="uid://cq3wcesnmbqx5" path="res://assets/fonts/AaSiHaSiHaShouXieTi-2.ttf" id="2_7wom8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_border"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[node name="HUDV2" type="CanvasLayer"]
+script = ExtResource("1_u7wp6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HPContainer" type="Control" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerHPLabel" type="VBoxContainer" parent="MarginContainer/HPContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.666667
+anchor_right = 1.0
+offset_left = -14.667358
+offset_top = 52.0
+offset_right = -14.667358
+offset_bottom = 171.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HPContainer/PlayerHPLabel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_7wom8")
+theme_override_font_sizes/font_size = 60
+text = "噗噗"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HPContainer/PlayerHPLabel"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_border")
+value = 100.0
+show_percentage = false

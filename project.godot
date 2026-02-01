@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="FaceIt"
-run/main_scene="uid://cnt2l8fovd5yv"
-config/features=PackedStringArray("4.6", "Forward Plus")
+run/main_scene="uid://bg85bg1khtnbc"
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [audio]

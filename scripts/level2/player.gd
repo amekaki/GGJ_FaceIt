@@ -5,18 +5,50 @@ const MAX_HEALTH = 100
 
 var health = MAX_HEALTH
 
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var light: AnimatedSprite2D = $light
+
 #@onready var ray_cast_up: RayCast2D = $RayCastUp
 #@onready var ray_cast_right: RayCast2D = $RayCastRight
 #@onready var ray_cast_down: RayCast2D = $RayCastDown
 #@onready var ray_cast_left: RayCast2D = $RayCastLeft
+# Optional: set this in the editor to point to the HUD node. If empty, we'll try to find a node named "HUDV2" or "HUD" in the current scene.
+@export var hud_path: NodePath
+var hud: CanvasLayer = null
+
+
+func _find_node_recursive(root: Node, target_name: String) -> Node:
+	if not root:
+		return null
+	if str(root.name) == target_name:
+		return root
+	for child in root.get_children():
+		var res = _find_node_recursive(child, target_name)
+		if res:
+			return res
+	return null
 
 
 func _ready() -> void:
 	# 将 player 添加到 "player" 组，方便识别
 	add_to_group("player")
+	# 解析 HUD：优先使用编辑器中设置的 hud_path，其次在当前场景中查找名为 "HUDV2" 或 "HUD" 的节点
+	if hud_path and str(hud_path) != "":
+		hud = get_node_or_null(hud_path)
+	if not hud:
+		var cs = get_tree().get_current_scene()
+		if cs:
+			# 先尝试 HUDV2（脚本名 hud_v_2 对应的节点可能命名为 HUDV2）
+			hud = _find_node_recursive(cs, "HUDV2")
+			if not hud:
+				hud = _find_node_recursive(cs, "HUD")
+
+	if hud:
+		hud.changeHP(health)
+	else:
+		print("[player.gd] HUD not found. Set `hud_path` or ensure a node named 'HUDV2'/'HUD' exists in the current scene.")
 
 
 var fixPosition = false
@@ -82,6 +114,11 @@ func take_damage(damage: int) -> void:
 	
 	animated_sprite.play("hurt")
 	print("Player 受到伤害: ", damage, " | 剩余生命值: ", health)
+	
+	print("hud", hud)
+	# 更新血条显示
+	if hud:
+		hud.changeHP(health)
 	
 	# 可以添加受伤动画或效果
 	# animated_sprite.modulate = Color.RED
